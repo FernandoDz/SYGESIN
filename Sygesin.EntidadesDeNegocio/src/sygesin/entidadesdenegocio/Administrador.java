@@ -3,7 +3,7 @@ package sygesin.entidadesdenegocio;
 import java.time.LocalDate;
 public class Administrador {
     private int id;
-    private int idRol;
+    private int rolId;
     private String nombre;
     private String apellido;
     private String login;
@@ -17,9 +17,9 @@ public class Administrador {
     public Administrador() {
     }
 
-    public Administrador(int id, int idRol, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol) {
+    public Administrador(int id, int rolId, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol) {
         this.id = id;
-        this.idRol = idRol;
+        this.rolId = rolId;
         this.nombre = nombre;
         this.apellido = apellido;
         this.login = login;
@@ -40,11 +40,11 @@ public class Administrador {
     }
 
     public int getIdRol() {
-        return idRol;
+        return rolId;
     }
 
     public void setIdRol(int idRol) {
-        this.idRol = idRol;
+        this.rolId = rolId;
     }
 
     public String getNombre() {
