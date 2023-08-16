@@ -1,6 +1,7 @@
 
 package sygesin.entidadesdenegocio;
 import java.time.LocalDate;
+import java.util.ArrayList;
 public class Administrador {
     private int id;
     private int rolId;
@@ -13,11 +14,12 @@ public class Administrador {
     private int top_aux;
     private String confirmPassword_aux;
     private Rol rol;
+    private ArrayList<Administrador> administradores;
 
     public Administrador() {
     }
 
-    public Administrador(int id, int rolId, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol) {
+    public Administrador(int id, int rolId, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol, ArrayList<Administrador> administradores) {
         this.id = id;
         this.rolId = rolId;
         this.nombre = nombre;
@@ -29,94 +31,110 @@ public class Administrador {
         this.top_aux = top_aux;
         this.confirmPassword_aux = confirmPassword_aux;
         this.rol = rol;
+        this.administradores = administradores;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdRol() {
+    public int getRolId() {
         return rolId;
-    }
-
-    public void setIdRol(int idRol) {
-        this.rolId = rolId;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getApellido() {
         return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public byte getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(byte estatus) {
-        this.estatus = estatus;
-    }
-
     public LocalDate getFechaRegistro() {
         return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDate fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
     }
 
     public int getTop_aux() {
         return top_aux;
     }
 
-    public void setTop_aux(int top_aux) {
-        this.top_aux = top_aux;
-    }
-
     public String getConfirmPassword_aux() {
         return confirmPassword_aux;
-    }
-
-    public void setConfirmPassword_aux(String confirmPassword_aux) {
-        this.confirmPassword_aux = confirmPassword_aux;
     }
 
     public Rol getRol() {
         return rol;
     }
 
+    public ArrayList<Administrador> getAdministradores() {
+        return administradores;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setRolId(int rolId) {
+        this.rolId = rolId;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEstatus(byte estatus) {
+        this.estatus = estatus;
+    }
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
+
+    public void setConfirmPassword_aux(String confirmPassword_aux) {
+        this.confirmPassword_aux = confirmPassword_aux;
+    }
+
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+
+    public void setAdministradores(ArrayList<Administrador> administradores) {
+        this.administradores = administradores;
+    }
+
+   public class EstatusAdninistrador{
+ public static final byte ACTIVO=1;
+ public static final byte INACTIVO=2;
+}
+
+    
     
 }
