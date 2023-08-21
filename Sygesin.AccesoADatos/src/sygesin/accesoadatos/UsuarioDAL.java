@@ -22,7 +22,7 @@ public class UsuarioDAL {
     }
     
     static String obtenerCampos() {
-        return "u.Id, u.IdRol, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro";
+        return "u.Id, u.RolId, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro";
     }
     
     private static String obtenerSelect(Usuario pUsuario) {
@@ -77,9 +77,9 @@ public class UsuarioDAL {
         boolean existe = existeLogin(pUsuario);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {
-                sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Usuario(RolId,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pUsuario.getId());
+                    ps.setInt(1, pUsuario.getRolId());
                     ps.setString(2, pUsuario.getNombre());
                     ps.setString(3, pUsuario.getApellido()); 
                     ps.setString(4, pUsuario.getLogin());
@@ -109,9 +109,9 @@ public class UsuarioDAL {
         boolean existe = existeLogin(pUsuario);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {                
-                sql = "UPDATE Usuario SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
+                sql = "UPDATE Usuario SET RolId=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pUsuario.getId());
+                    ps.setInt(1, pUsuario.getRolId());
                     ps.setString(2, pUsuario.getNombre());  
                     ps.setString(3, pUsuario.getApellido());
                     ps.setString(4, pUsuario.getLogin());
@@ -158,7 +158,7 @@ public class UsuarioDAL {
         pIndex++;
         pUsuario.setId(pResultSet.getInt(pIndex)); 
         pIndex++;
-        pUsuario.setId(pResultSet.getInt(pIndex)); 
+        pUsuario.setRolId(pResultSet.getInt(pIndex)); 
         pIndex++;
         pUsuario.setNombre(pResultSet.getString(pIndex)); 
         pIndex++;
@@ -260,8 +260,8 @@ public class UsuarioDAL {
             }
         }
 
-        if (pUsuario.getId() > 0) {
-            pUtilQuery.AgregarNumWhere(" u.IdRol=? ");
+        if (pUsuario.getRolId()> 0) {
+            pUtilQuery.AgregarNumWhere(" u.RolId=? ");
             if (statement != null) {
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getId());
             }
