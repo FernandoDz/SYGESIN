@@ -392,7 +392,7 @@ public class UsuarioDAL {
             sql += ",";
             sql += ROLDAL.obtenerCampos();
             sql += " FROM Usuario u";
-            sql += " JOIN Rol r on (u.IdRol=r.Id)";
+            sql += " JOIN Rol r on (u.RolId=r.Id)";
             ComunDB comundb = new ComunDB();
             ComunDB.utilQuery utilQuery = comundb.new utilQuery(sql, null, 0);
             querySelect(pUsuario, utilQuery);
