@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 public class Administrador {
     private int id;
-    private int rolId;
+    private int idRol;
     private String nombre;
     private String apellido;
     private String login;
@@ -19,9 +19,9 @@ public class Administrador {
     public Administrador() {
     }
 
-    public Administrador(int id, int rolId, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol, ArrayList<Administrador> administradores) {
+    public Administrador(int id, int idRol, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol, ArrayList<Administrador> administradores) {
         this.id = id;
-        this.rolId = rolId;
+        this.idRol = idRol;
         this.nombre = nombre;
         this.apellido = apellido;
         this.login = login;
@@ -39,7 +39,7 @@ public class Administrador {
     }
 
     public int getRolId() {
-        return rolId;
+        return idRol;
     }
 
     public String getNombre() {
@@ -87,7 +87,7 @@ public class Administrador {
     }
 
     public void setRolId(int rolId) {
-        this.rolId = rolId;
+        this.idRol = rolId;
     }
 
     public void setNombre(String nombre) {
