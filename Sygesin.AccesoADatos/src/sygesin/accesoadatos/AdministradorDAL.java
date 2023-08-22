@@ -103,7 +103,56 @@ public class AdministradorDAL {
         }
         return result;
     }
+      public static int modificar(Administrador pAdmin) throws Exception {
+        int result;
+        String sql;
+        boolean existe = existeLogin(pAdmin);
+        if (existe == false) {
+            try (Connection conn = ComunDB.obtenerConexion();) {                
+                sql = "UPDATE Administrador SET RolId=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
+                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+                    ps.setInt(1, pAdmin.getRolId());
+                    ps.setString(2, pAdmin.getNombre());  
+                    ps.setString(3, pAdmin.getApellido());
+                    ps.setString(4, pAdmin.getLogin());
+                    ps.setByte(5, pAdmin.getEstatus());
+                    ps.setInt(6, pAdmin.getId());
+                    result = ps.executeUpdate();
+                    ps.close();
+                } catch (SQLException ex) {
+                    throw ex;
+                }
+                conn.close();
+            } 
+            catch (SQLException ex) {
+                throw ex;
+            }
+        } else {
+            result = 0;
+            throw new RuntimeException("Login ya existe");
+        }
+        return result;
+    }
     
+       public static int eliminar(Administrador pAdmin) throws Exception {
+        int result;
+        String sql;
+        try (Connection conn = ComunDB.obtenerConexion();) { 
+            sql = "DELETE FROM Administrador WHERE Id=?"; 
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+                ps.setInt(1, pAdmin.getId());
+                result = ps.executeUpdate();
+                ps.close();
+            } catch (SQLException ex) {
+                throw ex;
+            }
+            conn.close();
+        }
+        catch (SQLException ex) {
+            throw ex;
+        }
+        return result;
+    }
     
     
      private static void obtenerDatos(PreparedStatement pPS, ArrayList<Administrador> pAdmin) throws Exception {
