@@ -1,4 +1,3 @@
-
 package sygesin.appweb.controller;
 
 import java.io.IOException;
@@ -18,8 +17,8 @@ import sygesin.entidadesdenegocio.Estudiante;
 
 @WebServlet(name = "EstudianteServlet", urlPatterns = {"/Estudiante"})
 public class EstudianteServlet extends HttpServlet {
-    
-     private Estudiante obtenerEstudiante(HttpServletRequest request) {
+
+    private Estudiante obtenerEstudiante(HttpServletRequest request) {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Estudiante estudiante = new Estudiante();
         estudiante.setNombre(Utilidad.getParameter(request, "nombre", ""));
@@ -105,7 +104,7 @@ public class EstudianteServlet extends HttpServlet {
             if (estudiante_result.getId() > 0) {
                 Rol rol = new Rol();
                 rol.setId(estudiante_result.getRolId());
-               estudiante_result.setRol(ROLDAL.obtenerPorId(rol));
+                estudiante_result.setRol(ROLDAL.obtenerPorId(rol));
                 request.setAttribute("estudiante", estudiante_result);
             } else {
                 Utilidad.enviarError("El Id:" + estudiante_result.getId() + " no existe en la tabla de Estudiante", request, response);
@@ -297,6 +296,4 @@ public class EstudianteServlet extends HttpServlet {
         }
     }
 
-
-   
 }
