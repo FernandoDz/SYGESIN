@@ -10,48 +10,48 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import sygesin.accesoadatos.ROLDAL;
-import sygesin.accesoadatos.AdministradorDAL;
+import sygesin.accesoadatos.EmpleadoDAL;
 import sygesin.appweb.utils.*;
 import sygesin.entidadesdenegocio.Rol;
-import sygesin.entidadesdenegocio.Administrador;
+import sygesin.entidadesdenegocio.Empleado;
 
-@WebServlet(name = "AdministradorServlet", urlPatterns = {"/Administrador"})
-public class AdministradorServlet extends HttpServlet {
+@WebServlet(name = "EmpleadoServlet", urlPatterns = {"/Empleado"})
+public class EmpleadoServlet extends HttpServlet {
 
-    private Administrador obtenerAdministrador(HttpServletRequest request) {
+    private Empleado obtenerEmpleado(HttpServletRequest request) {
         String accion = Utilidad.getParameter(request, "accion", "index");
-        Administrador administrador = new Administrador();
-        administrador.setNombre(Utilidad.getParameter(request, "nombre", ""));
-        administrador.setApellido(Utilidad.getParameter(request, "apellido", ""));
-        administrador.setLogin(Utilidad.getParameter(request, "login", ""));
-        administrador.setRolId(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
-        administrador.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+        Empleado empleado = new Empleado();
+        empleado.setNombre(Utilidad.getParameter(request, "nombre", ""));
+        empleado.setApellido(Utilidad.getParameter(request, "apellido", ""));
+        empleado.setLogin(Utilidad.getParameter(request, "login", ""));
+        empleado.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
+        empleado.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
 
         if (accion.equals("index")) {
-            administrador.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
-            administrador.setTop_aux(administrador.getTop_aux() == 0 ? Integer.MAX_VALUE : administrador.getTop_aux());
+            empleado.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
+            empleado.setTop_aux(empleado.getTop_aux() == 0 ? Integer.MAX_VALUE : empleado.getTop_aux());
         }
 
         if (accion.equals("login") || accion.equals("create") || accion.equals("cambiarpass")) {
-            administrador.setPassword(Utilidad.getParameter(request, "password", ""));
-            administrador.setConfirmPassword_aux(Utilidad.getParameter(request, "confirmPassword_aux", ""));
+            empleado.setPassword(Utilidad.getParameter(request, "password", ""));
+            empleado.setConfirmPassword_aux(Utilidad.getParameter(request, "confirmPassword_aux", ""));
             if (accion.equals("cambiarpass")) {
-                administrador.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
+                empleado.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
             }
         } else {
-            administrador.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
+            empleado.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
         }
-        return administrador;
+        return empleado;
     }
 
     private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = new Administrador();
-            administrador.setTop_aux(10);
-            ArrayList<Administrador> administradores = AdministradorDAL.buscarIncluirRol(administrador);
-            request.setAttribute("administradores", administradores);
-            request.setAttribute("top_aux", administrador.getTop_aux());
-            request.getRequestDispatcher("Views/Administrador/index.jsp").forward(request, response);
+            Empleado empleado = new Empleado();
+            empleado.setTop_aux(10);
+            ArrayList<Empleado> empleados = EmpleadoDAL.buscarIncluirRol(empleado);
+            request.setAttribute("empleados", empleados);
+            request.setAttribute("top_aux", empleado.getTop_aux());
+            request.getRequestDispatcher("Views/Empleado/index.jsp").forward(request, response);
         } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
@@ -59,24 +59,24 @@ public class AdministradorServlet extends HttpServlet {
 
     private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
-            ArrayList<Administrador> administradores = AdministradorDAL.buscarIncluirRol(administrador);
-            request.setAttribute("administradores", administradores);
-            request.setAttribute("top_aux", administrador.getTop_aux());
-            request.getRequestDispatcher("Views/Administrador/index.jsp").forward(request, response);
+            Empleado empleado = obtenerEmpleado(request);
+            ArrayList<Empleado> empleados = EmpleadoDAL.buscarIncluirRol(empleado);
+            request.setAttribute("empleados", empleados);
+            request.setAttribute("top_aux", empleado.getTop_aux());
+            request.getRequestDispatcher("Views/Empleado/index.jsp").forward(request, response);
         } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
 
     private void doGetRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("Views/Administrador/create.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Empleado/create.jsp").forward(request, response);
     }
 
     private void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
-            int result = AdministradorDAL.crear(administrador);
+            Empleado empleado = obtenerEmpleado(request);
+            int result = EmpleadoDAL.crear(empleado);
             if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
@@ -91,15 +91,15 @@ public class AdministradorServlet extends HttpServlet {
 
     private void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
-            Administrador administrador_result = AdministradorDAL.obtenerPorId(administrador);
-            if (administrador_result.getId() > 0) {
+            Empleado empleado = obtenerEmpleado(request);
+            Empleado empleado_result = EmpleadoDAL.obtenerPorId(empleado);
+            if (empleado_result.getId() > 0) {
                 Rol rol = new Rol();
-                rol.setId(administrador_result.getRolId());
-                administrador_result.setRol(ROLDAL.obtenerPorId(rol));
-                request.setAttribute("administrador", administrador_result);
+                rol.setId(empleado_result.getIdRol());
+                empleado_result.setRol(ROLDAL.obtenerPorId(rol));
+                request.setAttribute("empleado", empleado_result);
             } else {
-                Utilidad.enviarError("El Id:" + administrador_result.getId() + " no existe en la tabla de Administrador", request, response);
+                Utilidad.enviarError("El Id:" + empleado_result.getId() + " no existe en la tabla de Empleado", request, response);
             }
         } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
@@ -108,13 +108,13 @@ public class AdministradorServlet extends HttpServlet {
 
     private void doGetRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         requestObtenerPorId(request, response);
-        request.getRequestDispatcher("Views/Administrador/edit.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Empleado/edit.jsp").forward(request, response);
     }
 
     private void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
-            int result = AdministradorDAL.modificar(administrador);
+            Empleado empleado = obtenerEmpleado(request);
+            int result = EmpleadoDAL.modificar(empleado);
             if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
@@ -128,18 +128,18 @@ public class AdministradorServlet extends HttpServlet {
 
     private void doGetRequestDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         requestObtenerPorId(request, response);
-        request.getRequestDispatcher("Views/Administrador/details.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Epleado/details.jsp").forward(request, response);
     }
 
     private void doGetRequestDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         requestObtenerPorId(request, response);
-        request.getRequestDispatcher("Views/Administrador/delete.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Empleado/delete.jsp").forward(request, response);
     }
 
     private void doPostRequestDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
-            int result = AdministradorDAL.eliminar(administrador);
+            Empleado empleado = obtenerEmpleado(request);
+            int result = EmpleadoDAL.eliminar(empleado);
             if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
@@ -152,19 +152,19 @@ public class AdministradorServlet extends HttpServlet {
     }
 
     private void doGetRequestLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUser.cerrarSession(request);
-        request.getRequestDispatcher("Views/Administrador/login.jsp").forward(request, response);
+        SessionEmployee.cerrarSession(request);
+        request.getRequestDispatcher("Views/Empleado/login.jsp").forward(request, response);
     }
 
     private void doPostRequestLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
-            Administrador administrador_auth = AdministradorDAL.login(administrador);
-            if (administrador_auth.getId() != 0 && administrador_auth.getLogin().equals(administrador.getLogin())) {
+            Empleado empleado = obtenerEmpleado(request);
+            Empleado empleado_auth = EmpleadoDAL.login(empleado);
+            if (empleado_auth.getId() != 0 && empleado_auth.getLogin().equals(empleado.getLogin())) {
                 Rol rol = new Rol();
-                rol.setId(administrador_auth.getRolId());
-                administrador_auth.setRol(ROLDAL.obtenerPorId(rol));
-                SessionAdmin.autenticarAdmin(request, administrador_auth);
+                rol.setId(empleado_auth.getIdRol());
+                empleado_auth.setRol(ROLDAL.obtenerPorId(rol));
+                SessionEmployee.autenticarEmployee(request, empleado_auth);
                 response.sendRedirect("Home");
             } else {
                 request.setAttribute("error", "Credenciales incorrectas");
@@ -178,14 +178,14 @@ public class AdministradorServlet extends HttpServlet {
 
     private void doGetRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = new Administrador();
-            administrador.setLogin(SessionAdmin.getAdmin(request));
-            Administrador administrador_result = AdministradorDAL.buscar(administrador).get(0);
-            if (administrador_result.getId() > 0) {
-                request.setAttribute("administrador", administrador_result);
-                request.getRequestDispatcher("Views/Administrador/cambiarPassword.jsp").forward(request, response);
+            Empleado empleado = new Empleado();
+            empleado.setLogin(SessionEmployee.getEmployee(request));
+            Empleado empleado_result = EmpleadoDAL.buscar(empleado).get(0);
+            if (empleado_result.getId() > 0) {
+                request.setAttribute("usuario", empleado_result);
+                request.getRequestDispatcher("Views/Empleado/cambiarPassword.jsp").forward(request, response);
             } else {
-                Utilidad.enviarError("El Id:" + administrador_result.getId() + " no existe en la tabla de Administrador", request, response);
+                Utilidad.enviarError("El Id:" + empleado_result.getId() + " no existe en la tabla de Empleado", request, response);
             }
         } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
@@ -194,11 +194,11 @@ public class AdministradorServlet extends HttpServlet {
 
     private void doPostRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Administrador administrador = obtenerAdministrador(request);
+            Empleado usuario = obtenerEmpleado(request);
             String passActual = Utilidad.getParameter(request, "passwordActual", "");
-            int result = AdministradorDAL.cambiarPassword(administrador, passActual);
+            int result = EmpleadoDAL.cambiarPassword(usuario, passActual);
             if (result != 0) {
-                response.sendRedirect("Administrador?accion=login");
+                response.sendRedirect("Empleado?accion=login");
             } else {
                 Utilidad.enviarError("No se logro cambiar el password", request, response);
             }
@@ -207,7 +207,6 @@ public class AdministradorServlet extends HttpServlet {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -216,7 +215,7 @@ public class AdministradorServlet extends HttpServlet {
             request.setAttribute("accion", accion);
             doGetRequestLogin(request, response);
         } else {
-            SessionAdmin.authorize(request, response, () -> {
+            SessionUser.authorize(request, response, () -> {
                 switch (accion) {
                     case "index":
                         request.setAttribute("accion", accion);
@@ -258,7 +257,7 @@ public class AdministradorServlet extends HttpServlet {
             request.setAttribute("accion", accion);
             doPostRequestLogin(request, response);
         } else {
-            SessionAdmin.authorize(request, response, () -> {
+            SessionUser.authorize(request, response, () -> {
                 switch (accion) {
                     case "index":
                         request.setAttribute("accion", accion);
