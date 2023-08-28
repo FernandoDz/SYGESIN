@@ -22,7 +22,7 @@ public class UsuarioDAL {
     }
     
     static String obtenerCampos() {
-        return "u.Id, u.RolId, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro";
+        return "u.Id, u.IdRol, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro";
     }
     
     private static String obtenerSelect(Usuario pUsuario) {
@@ -77,7 +77,7 @@ public class UsuarioDAL {
         boolean existe = existeLogin(pUsuario);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {
-                sql = "INSERT INTO Usuario(RolId,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                     ps.setInt(1, pUsuario.getRolId());
                     ps.setString(2, pUsuario.getNombre());
@@ -109,7 +109,7 @@ public class UsuarioDAL {
         boolean existe = existeLogin(pUsuario);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {                
-                sql = "UPDATE Usuario SET RolId=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
+                sql = "UPDATE Usuario SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                     ps.setInt(1, pUsuario.getRolId());
                     ps.setString(2, pUsuario.getNombre());  
@@ -261,7 +261,7 @@ public class UsuarioDAL {
         }
 
         if (pUsuario.getRolId()> 0) {
-            pUtilQuery.AgregarNumWhere(" u.RolId=? ");
+            pUtilQuery.AgregarNumWhere(" u.IdRol=? ");
             if (statement != null) {
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getId());
             }
@@ -392,7 +392,7 @@ public class UsuarioDAL {
             sql += ",";
             sql += ROLDAL.obtenerCampos();
             sql += " FROM Usuario u";
-            sql += " JOIN Rol r on (u.RolId=r.Id)";
+            sql += " JOIN Rol r on (u.IdRol=r.Id)";
             ComunDB comundb = new ComunDB();
             ComunDB.utilQuery utilQuery = comundb.new utilQuery(sql, null, 0);
             querySelect(pUsuario, utilQuery);
