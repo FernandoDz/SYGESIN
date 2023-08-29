@@ -9,12 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import sygesin.accesoadatos.ROLDAL;
+import sygesin.accesoadatos.RolDAL;
 import sygesin.accesoadatos.UsuarioDAL;
 import sygesin.appweb.utils.*;
 import sygesin.entidadesdenegocio.Rol;
 import sygesin.entidadesdenegocio.Usuario;
-
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/Usuario"})
 public class UsuarioServlet extends HttpServlet {
 
@@ -24,14 +23,14 @@ public class UsuarioServlet extends HttpServlet {
         usuario.setNombre(Utilidad.getParameter(request, "nombre", ""));
         usuario.setApellido(Utilidad.getParameter(request, "apellido", ""));
         usuario.setLogin(Utilidad.getParameter(request, "login", ""));
-        usuario.setRolId(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
+        usuario.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
         usuario.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
-
+        
         if (accion.equals("index")) {
             usuario.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
             usuario.setTop_aux(usuario.getTop_aux() == 0 ? Integer.MAX_VALUE : usuario.getTop_aux());
         }
-
+        
         if (accion.equals("login") || accion.equals("create") || accion.equals("cambiarpass")) {
             usuario.setPassword(Utilidad.getParameter(request, "password", ""));
             usuario.setConfirmPassword_aux(Utilidad.getParameter(request, "confirmPassword_aux", ""));
@@ -95,8 +94,8 @@ public class UsuarioServlet extends HttpServlet {
             Usuario usuario_result = UsuarioDAL.obtenerPorId(usuario);
             if (usuario_result.getId() > 0) {
                 Rol rol = new Rol();
-                rol.setId(usuario_result.getRolId());
-                usuario_result.setRol(ROLDAL.obtenerPorId(rol));
+                rol.setId(usuario_result.getIdRol());
+                usuario_result.setRol(RolDAL.obtenerPorId(rol));
                 request.setAttribute("usuario", usuario_result);
             } else {
                 Utilidad.enviarError("El Id:" + usuario_result.getId() + " no existe en la tabla de Usuario", request, response);
@@ -162,8 +161,8 @@ public class UsuarioServlet extends HttpServlet {
             Usuario usuario_auth = UsuarioDAL.login(usuario);
             if (usuario_auth.getId() != 0 && usuario_auth.getLogin().equals(usuario.getLogin())) {
                 Rol rol = new Rol();
-                rol.setId(usuario_auth.getRolId());
-                usuario_auth.setRol(ROLDAL.obtenerPorId(rol));
+                rol.setId(usuario_auth.getIdRol());
+                usuario_auth.setRol(RolDAL.obtenerPorId(rol));
                 SessionUser.autenticarUser(request, usuario_auth);
                 response.sendRedirect("Home");
             } else {
@@ -179,7 +178,7 @@ public class UsuarioServlet extends HttpServlet {
     private void doGetRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Usuario usuario = new Usuario();
-            usuario.setLogin(SessionUser.getUser(request));
+            usuario.setLogin(SessionUser.getUser(request)); 
             Usuario usuario_result = UsuarioDAL.buscar(usuario).get(0);
             if (usuario_result.getId() > 0) {
                 request.setAttribute("usuario", usuario_result);
@@ -208,6 +207,7 @@ public class UsuarioServlet extends HttpServlet {
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -215,7 +215,7 @@ public class UsuarioServlet extends HttpServlet {
         if (accion.equals("login")) {
             request.setAttribute("accion", accion);
             doGetRequestLogin(request, response);
-        } else {
+        } else { 
             SessionUser.authorize(request, response, () -> {
                 switch (accion) {
                     case "index":
@@ -257,7 +257,7 @@ public class UsuarioServlet extends HttpServlet {
         if (accion.equals("login")) {
             request.setAttribute("accion", accion);
             doPostRequestLogin(request, response);
-        } else {
+        } else { 
             SessionUser.authorize(request, response, () -> {
                 switch (accion) {
                     case "index":
@@ -287,5 +287,6 @@ public class UsuarioServlet extends HttpServlet {
             });
         }
     }
-
+// </editor-fold>
+    
 }

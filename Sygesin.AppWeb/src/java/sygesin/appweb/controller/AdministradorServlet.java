@@ -9,8 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import sygesin.accesoadatos.ROLDAL;
+import sygesin.accesoadatos.RolDAL;
 import sygesin.accesoadatos.AdministradorDAL;
+import sygesin.accesoadatos.RolDAL;
 import sygesin.appweb.utils.*;
 import sygesin.entidadesdenegocio.Rol;
 import sygesin.entidadesdenegocio.Administrador;
@@ -96,7 +97,7 @@ public class AdministradorServlet extends HttpServlet {
             if (administrador_result.getId() > 0) {
                 Rol rol = new Rol();
                 rol.setId(administrador_result.getRolId());
-                administrador_result.setRol(ROLDAL.obtenerPorId(rol));
+                administrador_result.setRol(RolDAL.obtenerPorId(rol));
                 request.setAttribute("administrador", administrador_result);
             } else {
                 Utilidad.enviarError("El Id:" + administrador_result.getId() + " no existe en la tabla de Administrador", request, response);
@@ -163,7 +164,7 @@ public class AdministradorServlet extends HttpServlet {
             if (administrador_auth.getId() != 0 && administrador_auth.getLogin().equals(administrador.getLogin())) {
                 Rol rol = new Rol();
                 rol.setId(administrador_auth.getRolId());
-                administrador_auth.setRol(ROLDAL.obtenerPorId(rol));
+                administrador_auth.setRol(RolDAL.obtenerPorId(rol));
                 SessionAdmin.autenticarAdmin(request, administrador_auth);
                 response.sendRedirect("Home");
             } else {

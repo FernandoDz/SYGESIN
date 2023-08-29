@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import sygesin.accesoadatos.ROLDAL;
+import sygesin.accesoadatos.RolDAL;
 import sygesin.entidadesdenegocio.Rol;
 import sygesin.appweb.utils.*;
 
@@ -36,7 +36,7 @@ public class RolServlet extends HttpServlet {
         try {
             Rol rol = new Rol();
             rol.setTop_aux(10);
-            ArrayList<Rol> roles = ROLDAL.buscar(rol);
+            ArrayList<Rol> roles = RolDAL.buscar(rol);
             request.setAttribute("roles", roles);
             request.setAttribute("top_aux", rol.getTop_aux());
             request.getRequestDispatcher("Views/Rol/index.jsp").forward(request, response);
@@ -48,7 +48,7 @@ public class RolServlet extends HttpServlet {
     private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Rol rol = obtenerRol(request);
-            ArrayList<Rol> roles = ROLDAL.buscar(rol);
+            ArrayList<Rol> roles = RolDAL.buscar(rol);
             request.setAttribute("roles", roles);
             request.setAttribute("top_aux", rol.getTop_aux());
             request.getRequestDispatcher("Views/Rol/index.jsp").forward(request, response);
@@ -64,7 +64,7 @@ public class RolServlet extends HttpServlet {
     private void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Rol rol = obtenerRol(request);
-            int result = ROLDAL.crear(rol);
+            int result = RolDAL.crear(rol);
             if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
@@ -79,7 +79,7 @@ public class RolServlet extends HttpServlet {
     private void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Rol rol = obtenerRol(request);
-            Rol rol_result = ROLDAL.obtenerPorId(rol);
+            Rol rol_result = RolDAL.obtenerPorId(rol);
             if (rol_result.getId() > 0) {
                 request.setAttribute("rol", rol_result);
             } else {
@@ -98,7 +98,7 @@ public class RolServlet extends HttpServlet {
     private void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Rol rol = obtenerRol(request);
-            int result = ROLDAL.modificar(rol);
+            int result = RolDAL.modificar(rol);
             if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
@@ -124,7 +124,7 @@ public class RolServlet extends HttpServlet {
     private void doPostRequestDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Rol rol = obtenerRol(request);
-            int result = ROLDAL.eliminar(rol);
+            int result = RolDAL.eliminar(rol);
             if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);

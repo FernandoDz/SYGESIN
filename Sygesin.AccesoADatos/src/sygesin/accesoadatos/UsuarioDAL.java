@@ -79,7 +79,7 @@ public class UsuarioDAL {
             try (Connection conn = ComunDB.obtenerConexion();) {
                 sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pUsuario.getRolId());
+                    ps.setInt(1, pUsuario.getIdRol());
                     ps.setString(2, pUsuario.getNombre());
                     ps.setString(3, pUsuario.getApellido()); 
                     ps.setString(4, pUsuario.getLogin());
@@ -111,7 +111,7 @@ public class UsuarioDAL {
             try (Connection conn = ComunDB.obtenerConexion();) {                
                 sql = "UPDATE Usuario SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pUsuario.getRolId());
+                    ps.setInt(1, pUsuario.getIdRol());
                     ps.setString(2, pUsuario.getNombre());  
                     ps.setString(3, pUsuario.getApellido());
                     ps.setString(4, pUsuario.getLogin());
@@ -158,7 +158,7 @@ public class UsuarioDAL {
         pIndex++;
         pUsuario.setId(pResultSet.getInt(pIndex)); 
         pIndex++;
-        pUsuario.setRolId(pResultSet.getInt(pIndex)); 
+        pUsuario.setIdRol(pResultSet.getInt(pIndex)); 
         pIndex++;
         pUsuario.setNombre(pResultSet.getString(pIndex)); 
         pIndex++;
@@ -191,13 +191,13 @@ public class UsuarioDAL {
             while (resultSet.next()) {
                 Usuario usuario = new Usuario();
                 int index = asignarDatosResultSet(usuario, resultSet, 0);
-                if (rolMap.containsKey(usuario.getId()) == false) {
+                if (rolMap.containsKey(usuario.getIdRol()) == false) {
                     Rol rol = new Rol();
-                    ROLDAL.asignarDatosResultSet(rol, resultSet, index);
+                    RolDAL.asignarDatosResultSet(rol, resultSet, index);
                     rolMap.put(rol.getId(), rol); 
                     usuario.setRol(rol); 
                 } else {
-                    usuario.setRol(rolMap.get(usuario.getId())); 
+                    usuario.setRol(rolMap.get(usuario.getIdRol())); 
                 }
                 pUsuarios.add(usuario); 
             }
@@ -260,10 +260,10 @@ public class UsuarioDAL {
             }
         }
 
-        if (pUsuario.getRolId()> 0) {
+        if (pUsuario.getIdRol() > 0) {
             pUtilQuery.AgregarNumWhere(" u.IdRol=? ");
             if (statement != null) {
-                statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getId());
+                statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getIdRol());
             }
         }
         
@@ -390,7 +390,7 @@ public class UsuarioDAL {
             }
             sql += obtenerCampos();
             sql += ",";
-            sql += ROLDAL.obtenerCampos();
+            sql += RolDAL.obtenerCampos();
             sql += " FROM Usuario u";
             sql += " JOIN Rol r on (u.IdRol=r.Id)";
             ComunDB comundb = new ComunDB();

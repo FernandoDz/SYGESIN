@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import sygesin.accesoadatos.ROLDAL;
+import sygesin.accesoadatos.RolDAL;
 import sygesin.accesoadatos.EstudianteDAL;
 import sygesin.appweb.utils.*;
 import sygesin.entidadesdenegocio.Rol;
@@ -104,7 +104,7 @@ public class EstudianteServlet extends HttpServlet {
             if (estudiante_result.getId() > 0) {
                 Rol rol = new Rol();
                 rol.setId(estudiante_result.getRolId());
-                estudiante_result.setRol(ROLDAL.obtenerPorId(rol));
+                estudiante_result.setRol(RolDAL.obtenerPorId(rol));
                 request.setAttribute("estudiante", estudiante_result);
             } else {
                 Utilidad.enviarError("El Id:" + estudiante_result.getId() + " no existe en la tabla de Estudiante", request, response);
@@ -171,7 +171,7 @@ public class EstudianteServlet extends HttpServlet {
             if (estudiante_auth.getId() != 0 && estudiante_auth.getLogin().equals(estudiante.getLogin())) {
                 Rol rol = new Rol();
                 rol.setId(estudiante_auth.getRolId());
-                estudiante_auth.setRol(ROLDAL.obtenerPorId(rol));
+                estudiante_auth.setRol(RolDAL.obtenerPorId(rol));
                 SessionEstud.autenticarEstud(request, estudiante_auth);
                 response.sendRedirect("Home");
             } else {

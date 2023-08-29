@@ -192,7 +192,7 @@ public class EmpleadoDAL {
                 int index = asignarDatosResultSet(empleados, resultSet, 0);
                 if (rolMap.containsKey(empleados.getId()) == false) {
                     Rol rol = new Rol();
-                    ROLDAL.asignarDatosResultSet(rol, resultSet, index);
+                    RolDAL.asignarDatosResultSet(rol, resultSet, index);
                     rolMap.put(rol.getId(), rol);
                     empleados.setRol(rol);
                 } else {
@@ -384,7 +384,7 @@ public class EmpleadoDAL {
             }
             sql += obtenerCampos();
             sql += ",";
-            sql += ROLDAL.obtenerCampos();
+            sql += RolDAL.obtenerCampos();
             sql += " FROM Empleado a";
             sql += " JOIN Rol r on (a.IdRol=r.Id)";
             ComunDB comundb = new ComunDB();

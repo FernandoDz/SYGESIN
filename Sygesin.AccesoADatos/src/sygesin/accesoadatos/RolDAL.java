@@ -1,10 +1,12 @@
+
 package sygesin.accesoadatos;
 
 import java.util.*;
 import java.sql.*;
 import sygesin.entidadesdenegocio.*;
 
-public class ROLDAL {
+public class RolDAL {
+    
     static String obtenerCampos() {
         return "r.Id, r.Nombre";
     }

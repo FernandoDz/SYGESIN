@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import sygesin.accesoadatos.ROLDAL;
+import sygesin.accesoadatos.RolDAL;
 import sygesin.accesoadatos.EmpleadoDAL;
 import sygesin.appweb.utils.*;
 import sygesin.entidadesdenegocio.Rol;
@@ -96,7 +96,7 @@ public class EmpleadoServlet extends HttpServlet {
             if (empleado_result.getId() > 0) {
                 Rol rol = new Rol();
                 rol.setId(empleado_result.getIdRol());
-                empleado_result.setRol(ROLDAL.obtenerPorId(rol));
+                empleado_result.setRol(RolDAL.obtenerPorId(rol));
                 request.setAttribute("empleado", empleado_result);
             } else {
                 Utilidad.enviarError("El Id:" + empleado_result.getId() + " no existe en la tabla de Empleado", request, response);
@@ -163,7 +163,7 @@ public class EmpleadoServlet extends HttpServlet {
             if (empleado_auth.getId() != 0 && empleado_auth.getLogin().equals(empleado.getLogin())) {
                 Rol rol = new Rol();
                 rol.setId(empleado_auth.getIdRol());
-                empleado_auth.setRol(ROLDAL.obtenerPorId(rol));
+                empleado_auth.setRol(RolDAL.obtenerPorId(rol));
                 SessionEmployee.autenticarEmployee(request, empleado_auth);
                 response.sendRedirect("Home");
             } else {
