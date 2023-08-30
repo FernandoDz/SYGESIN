@@ -9,9 +9,9 @@
         <ul class="right hide-on-med-and-down">  
             <% if (SessionUser.isAuth(request)) {  %>
             <li><a href="Home">Inicio</a></li>
-            <li><a href="Usuarios">Usuarios</a></li>
-            <li><a href="Estudiantes">Estudiantes</a></li>
-            <li><a href="Empleadosario">Empleados</a></li>
+            <li><a href="Usuario?accion=index">Usuarios</a></li>
+            <li><a href="Estudiante?accion=index">Estudiantes</a></li>
+            <li><a href="Empleado">Empleados</a></li>
             <li><a href="Rol">Roles</a></li>
             <li><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
             <li><a href="Usuario?accion=login">Cerrar sesión</a></li>

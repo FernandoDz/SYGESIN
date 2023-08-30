@@ -5,7 +5,7 @@
 <% if (SessionUser.isAuth(request) == false) {
          response.sendRedirect("Usuario?accion=login");
     }
-%>
+%> 
 <!DOCTYPE html>
 <html>
     <head>
