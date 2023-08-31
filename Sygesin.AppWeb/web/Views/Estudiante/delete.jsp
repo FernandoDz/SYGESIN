@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 <html>
-    <head>        
+    <head>
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Eliminar Estudiante</title>
     </head>
@@ -15,12 +15,12 @@
             <h5>Eliminar Estudiante</h5>
             <form action="Estudiante" method="post">  
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
-                <input type="hidden" name="id" value="<%=estudiante.getId()%>">  
+                <input type="hidden" name="id" value="<%=empresa.getId()%>">  
                 <div class="row">
-                    <div class="input-field col l4 s12">
-                        <input  id="txtSeccionId" type="text" value="<%=estudiante.getSeccionId()%>" disabled>
-                        <label for="txtSeccionId">SeccionId</label>
-                    </div>   
+                   <div class="input-field col l4 s12">
+                        <input  id="txtIdRold" type="text" value="<%=estudiante.getIdrol()%>" disabled>
+                        <label for="txtIdRold">Rol</label>
+                    </div> 
                     <div class="input-field col l4 s12">
                         <input  id="txtNombre" type="text" value="<%=estudiante.getNombre()%>" disabled>
                         <label for="txtNombre">Nombre</label>
@@ -57,36 +57,15 @@
                         <input  id="txtFechanacimiento" type="text" value="<%=estudiante.getFechanacimiento()%>" disabled>
                         <label for="txtFechanacimiento">Fechanacimiento</label>
                     </div>
-                    <div class="input-field col l4 s12">
-                        <input  id="txtLogin" type="text" value="<%=estudiante.getLogin()%>" disabled>
-                        <label for="txtLogin">Login</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
-                        <input  id="txtPassword" type="text" value="<%=estudiante.getPassword()%>" disabled>
-                        <label for="txtPassword">Password</label>
-                    </div> 
-                    <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus" disabled>
-                            <option value="0" <%=(estudiante.getEstatus() == 10) ? "selected" : ""%>>SELECCIONAR</option>
-                            <option value="<%=Estudiante.EstatusEstudiante.ACTIVO%>"  <%=(estudiante.getEstatus() == Estudiante.EstatusEstudiante.ACTIVO) ? "selected" : ""%>>ACTIVO</option>
-                            <option value="<%=Estudiante.EstatusEstudiante.INACTIVO%>"  <%=(estudiante.getEstatus() == Estudiante.EstatusEstudiante.INACTIVO) ? "selected" : ""%>>INACTIVO</option>
-                        </select>       
-                        <label for="slEstatus">Estatus</label>                       
-                    </div>
-                    <div class="input-field col l4 s12">
-                        <input id="txtRol" type="text" value="<%=estudiante.getRol().getNombre()%>" disabled>
-                        <label for="txtRol">Rol</label>
-                    </div> 
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">delete</i>Eliminar</button>
-                        <a href="Estudiante" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <a href="Estudiante" class="waves-effect waves-light btn blue"><i class="material-icons right">cancel</i>Cancelar</a>                          
                     </div>
                 </div>
             </form>          
         </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />         
+        <jsp:include page="/Views/Shared/footerBody.jsp" />
     </body>
 </html>
-

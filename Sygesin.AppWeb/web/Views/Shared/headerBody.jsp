@@ -23,8 +23,8 @@
 
             <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Usuario">Usuarios</a></li>
             <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Empleado">Empleados</a></li>
+              <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Estudiante?accion=index">Estudiante</a></li>
             <li><a class="text-sm text-gray-400" href="Administrador">Administrador</a></li>
-
             <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Usuario?accion=cambiarpass">Cambiar Password</a></li>
         </ul>
         <a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="Usuario?accion=login">Cerrar Sesion</a>

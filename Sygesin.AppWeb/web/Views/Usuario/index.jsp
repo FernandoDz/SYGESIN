@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sygesin.entidadesdenegocio.Usuario"%>
 <%@page import="sygesin.entidadesdenegocio.Rol"%>
+
 <%@page import="java.util.ArrayList"%>
 <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios");
     int numPage = 1;
@@ -57,7 +58,7 @@
                         <jsp:include page="/Views/Rol/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>                        
-                    </div>
+                  
                     <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Shared/selectTop.jsp">
                             <jsp:param name="top_aux" value="<%=top_aux%>" />                        
