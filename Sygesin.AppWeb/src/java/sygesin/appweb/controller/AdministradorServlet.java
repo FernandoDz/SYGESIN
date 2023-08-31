@@ -18,15 +18,14 @@ import sygesin.entidadesdenegocio.Administrador;
 
 @WebServlet(name = "AdministradorServlet", urlPatterns = {"/Administrador"})
 public class AdministradorServlet extends HttpServlet {
-
-    private Administrador obtenerAdministrador(HttpServletRequest request) {
+  private Administrador obtenerAdministrador(HttpServletRequest request) {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Administrador administrador = new Administrador();
         administrador.setNombre(Utilidad.getParameter(request, "nombre", ""));
         administrador.setApellido(Utilidad.getParameter(request, "apellido", ""));
         administrador.setLogin(Utilidad.getParameter(request, "login", ""));
-        administrador.setRolId(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
-        administrador.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+        administrador.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
+        administrador.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "EstatusAdministrador", "0")));
 
         if (accion.equals("index")) {
             administrador.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
@@ -96,7 +95,7 @@ public class AdministradorServlet extends HttpServlet {
             Administrador administrador_result = AdministradorDAL.obtenerPorId(administrador);
             if (administrador_result.getId() > 0) {
                 Rol rol = new Rol();
-                rol.setId(administrador_result.getRolId());
+                rol.setId(administrador_result.getIdRol());
                 administrador_result.setRol(RolDAL.obtenerPorId(rol));
                 request.setAttribute("administrador", administrador_result);
             } else {
@@ -163,7 +162,7 @@ public class AdministradorServlet extends HttpServlet {
             Administrador administrador_auth = AdministradorDAL.login(administrador);
             if (administrador_auth.getId() != 0 && administrador_auth.getLogin().equals(administrador.getLogin())) {
                 Rol rol = new Rol();
-                rol.setId(administrador_auth.getRolId());
+                rol.setId(administrador_auth.getIdRol());
                 administrador_auth.setRol(RolDAL.obtenerPorId(rol));
                 SessionAdmin.autenticarAdmin(request, administrador_auth);
                 response.sendRedirect("Home");
@@ -288,5 +287,6 @@ public class AdministradorServlet extends HttpServlet {
             });
         }
     }
+
 
 }

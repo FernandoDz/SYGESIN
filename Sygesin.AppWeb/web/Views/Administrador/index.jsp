@@ -7,8 +7,8 @@
     int numPage = 1;
     int numReg = 10;
     int countReg = 0;
-    if (usuarios == null) {
-        usuarios = new ArrayList();
+    if (administradores == null) {
+        administradores = new ArrayList();
     } else if (administradores.size() > numReg) {
         double divNumPage = (double) administradores.size() / (double) numReg;
         numPage = (int) Math.ceil(divNumPage);
@@ -47,7 +47,7 @@
                         <label for="txtLogin">Login</label>
                     </div>                    
                     <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus">
+                        <select id="slEstatus" name="estatusAdministrador">
                             <option value="0">SELECCIONAR</option>
                             <option value="<%=Administrador.EstatusAdministrador.ACTIVO%>">ACTIVO</option>
                             <option value="<%=Administrador.EstatusAdministrador.INACTIVO%>">INACTIVO</option>
@@ -89,7 +89,7 @@
                                 </tr>
                             </thead>                       
                             <tbody>                           
-                                <% for (Administrador usuario : usuarios) {
+                                <% for (Administrador administrador : administradores) {
                                         int tempNumPage = numPage;
                                         if (numPage > 1) {
                                             countReg++;
@@ -117,15 +117,15 @@
                                     <td><%=administrador.getFechaRegistro()%></td> 
                                     <td>
                                         <div style="display:flex">
-                                             <a href="Usuario?accion=edit&id=<%=administrador.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <a href="Usuario?accion=details&id=<%=administrador.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
-                                            <i class="material-icons">description</i>
-                                        </a>
-                                        <a href="Usuario?accion=delete&id=<%=administrador.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
-                                            <i class="material-icons">delete</i>
-                                        </a>    
+                                            <a href="Usuario?accion=edit&id=<%=administrador.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
+                                                <i class="material-icons">edit</i>
+                                            </a>
+                                            <a href="Usuario?accion=details&id=<%=administrador.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
+                                                <i class="material-icons">description</i>
+                                            </a>
+                                            <a href="Usuario?accion=delete&id=<%=administrador.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
+                                                <i class="material-icons">delete</i>
+                                            </a>    
                                         </div>                                                                    
                                     </td>                                   
                                 </tr>

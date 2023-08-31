@@ -9,31 +9,25 @@ public class Empleado {
     private int idRol;
     private String nombre;
     private String apellido;
-    private String login;
-    private String password;
-    private byte estatus;
-    private LocalDate fechaRegistro;
+    private String cargo;
+    private String telefono;
+    private String DUI;
     private int top_aux;
-    private String confirmPassword_aux;
     private Rol rol;
-    private ArrayList<Empleado> empleados;
 
     public Empleado() {
     }
 
-    public Empleado(int id, int idRol, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol, ArrayList<Empleado> empleados) {
+    public Empleado(int id, int idRol, String nombre, String apellido, String cargo, String telefono, String DUI, int top_aux, Rol rol) {
         this.id = id;
         this.idRol = idRol;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.login = login;
-        this.password = password;
-        this.estatus = estatus;
-        this.fechaRegistro = fechaRegistro;
+        this.cargo = cargo;
+        this.telefono = telefono;
+        this.DUI = DUI;
         this.top_aux = top_aux;
-        this.confirmPassword_aux = confirmPassword_aux;
         this.rol = rol;
-        this.empleados = empleados;
     }
 
     public int getId() {
@@ -68,36 +62,28 @@ public class Empleado {
         this.apellido = apellido;
     }
 
-    public String getLogin() {
-        return login;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
-    public String getPassword() {
-        return password;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public byte getEstatus() {
-        return estatus;
+    public String getDUI() {
+        return DUI;
     }
 
-    public void setEstatus(byte estatus) {
-        this.estatus = estatus;
-    }
-
-    public LocalDate getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDate fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
+    public void setDUI(String DUI) {
+        this.DUI = DUI;
     }
 
     public int getTop_aux() {
@@ -108,14 +94,6 @@ public class Empleado {
         this.top_aux = top_aux;
     }
 
-    public String getConfirmPassword_aux() {
-        return confirmPassword_aux;
-    }
-
-    public void setConfirmPassword_aux(String confirmPassword_aux) {
-        this.confirmPassword_aux = confirmPassword_aux;
-    }
-
     public Rol getRol() {
         return rol;
     }
@@ -123,18 +101,5 @@ public class Empleado {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-
-    public ArrayList<Empleado> getEmpleados() {
-        return empleados;
-    }
-
-    public void setEmpleados(ArrayList<Empleado> empleados) {
-        this.empleados = empleados;
-    }
-
-    public class EstatusEmpleado {
-
-        public static final byte ACTIVO = 1;
-        public static final byte INACTIVO = 2;
-    }
+   
 }

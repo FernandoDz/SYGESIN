@@ -7,25 +7,8 @@ import sygesin.entidadesdenegocio.*;
 
 public class EmpleadoDAL {
 
-    public static String encriptarMD5(String txt) throws Exception {
-        try {
-            StringBuffer sb;
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(txt.getBytes());
-            sb = new StringBuffer();
-            for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100)
-                        .substring(1, 3));
-            }
-            return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException ex) {
-            throw ex;
-        }
-
-    }
-
     static String obtenerCampos() {
-        return "a.Id, a.IdRol, a.Nombre, a.Apellido, a.Login, a.Estatus, a.FechaRegistro";
+        return "e.Id, e.IdRol, e.Nombre, e.Apellido, e.Cargo, e.Telefono , e.DUI";
     }
 
     private static String obtenerSelect(Empleado pEmpleado) {
@@ -34,28 +17,32 @@ public class EmpleadoDAL {
         if (pEmpleado.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
             sql += "TOP " + pEmpleado.getTop_aux() + " ";
         }
-        sql += (obtenerCampos() + " FROM Empleado a");
+        sql += (obtenerCampos() + "FROM Empleado e");
         return sql;
     }
 
     private static String agregarOrderBy(Empleado pEmpleado) {
-        String sql = " ORDER BY a.Id DESC";
+        String sql = " ORDER BY e.Id DESC";
         if (pEmpleado.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.MYSQL) {
             sql += " LIMIT " + pEmpleado.getTop_aux() + " ";
         }
         return sql;
     }
 
-    private static boolean existeLogin(Empleado pEmpleado) throws Exception {
-        boolean existe = false;
-        ArrayList<Empleado> empleados = new ArrayList();
+    public static int crear(Empleado pEmpleado) throws Exception {
+        int result;
+        String sql;
+
         try (Connection conn = ComunDB.obtenerConexion();) {
-            String sql = obtenerSelect(pEmpleado);
-            sql += " WHERE a.Id<>? AND a.Login=?";
+            sql = "INSERT INTO Empleado(IdRol,Nombre,Apellido,Cargo,Telefono,DUI) VALUES(?,?,?,?,?,?)";
             try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                ps.setInt(1, pEmpleado.getId());
-                ps.setString(2, pEmpleado.getLogin());
-                obtenerDatos(ps, empleados);
+                ps.setInt(1, pEmpleado.getIdRol());
+                ps.setString(2, pEmpleado.getNombre());
+                ps.setString(3, pEmpleado.getApellido());
+                ps.setString(4, pEmpleado.getCargo());
+                ps.setString(5, pEmpleado.getTelefono());
+                ps.setString(6, pEmpleado.getDUI());
+                result = ps.executeUpdate();
                 ps.close();
             } catch (SQLException ex) {
                 throw ex;
@@ -64,73 +51,33 @@ public class EmpleadoDAL {
         } catch (SQLException ex) {
             throw ex;
         }
-        if (empleados.size() > 0) {
-            Empleado empleado = empleados.get(0);
-            if (empleado.getId() > 0 && empleado.getLogin().equals(pEmpleado.getLogin())) {
-                existe = true;
-            }
-        }
-        return existe;
-    }
 
-    public static int crear(Empleado pEmpleado) throws Exception {
-        int result;
-        String sql;
-        boolean existe = existeLogin(pEmpleado);
-        if (existe == false) {
-            try (Connection conn = ComunDB.obtenerConexion();) {
-                sql = "INSERT INTO Empleado(IdRol,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pEmpleado.getId());
-                    ps.setString(2, pEmpleado.getNombre());
-                    ps.setString(3, pEmpleado.getApellido());
-                    ps.setString(4, pEmpleado.getLogin());
-                    ps.setString(5, encriptarMD5(pEmpleado.getPassword()));
-                    ps.setByte(6, pEmpleado.getEstatus());
-                    ps.setDate(7, java.sql.Date.valueOf(LocalDate.now()));
-                    result = ps.executeUpdate();
-                    ps.close();
-                } catch (SQLException ex) {
-                    throw ex;
-                }
-                conn.close();
-            } catch (SQLException ex) {
-                throw ex;
-            }
-        } else {
-            result = 0;
-            throw new RuntimeException("Login ya existe");
-        }
         return result;
     }
 
     public static int modificar(Empleado pEmpleado) throws Exception {
         int result;
         String sql;
-        boolean existe = existeLogin(pEmpleado);
-        if (existe == false) {
-            try (Connection conn = ComunDB.obtenerConexion();) {
-                sql = "UPDATE Empleado SET RolId=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pEmpleado.getIdRol());
-                    ps.setString(2, pEmpleado.getNombre());
-                    ps.setString(3, pEmpleado.getApellido());
-                    ps.setString(4, pEmpleado.getLogin());
-                    ps.setByte(5, pEmpleado.getEstatus());
-                    ps.setInt(6, pEmpleado.getId());
-                    result = ps.executeUpdate();
-                    ps.close();
-                } catch (SQLException ex) {
-                    throw ex;
-                }
-                conn.close();
+        try (Connection conn = ComunDB.obtenerConexion();) {
+            sql = "UPDATE Empleado SET IdRol=?, Nombre=?, Apellido=?, Cargo=?, Telefono=?, DUI=?  WHERE Id=?";
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+                ps.setInt(1, pEmpleado.getIdRol());
+                ps.setString(2, pEmpleado.getNombre());
+                ps.setString(3, pEmpleado.getApellido());
+                ps.setString(4, pEmpleado.getCargo());
+                ps.setString(5, pEmpleado.getTelefono());
+                ps.setString(6, pEmpleado.getDUI());
+                ps.setInt(7, pEmpleado.getId());
+                result = ps.executeUpdate();
+                ps.close();
             } catch (SQLException ex) {
                 throw ex;
             }
-        } else {
-            result = 0;
-            throw new RuntimeException("Login ya existe");
+            conn.close();
+        } catch (SQLException ex) {
+            throw ex;
         }
+
         return result;
     }
 
@@ -153,12 +100,30 @@ public class EmpleadoDAL {
         return result;
     }
 
+    static int asignarDatosResultSet(Empleado pEmpleado, ResultSet pResultSet, int pIndex) throws Exception {
+        pIndex++;
+        pEmpleado.setId(pResultSet.getInt(pIndex));
+        pIndex++;
+        pEmpleado.setIdRol(pResultSet.getInt(pIndex));
+        pIndex++;
+        pEmpleado.setNombre(pResultSet.getString(pIndex));
+        pIndex++;
+        pEmpleado.setApellido(pResultSet.getString(pIndex));
+        pIndex++;
+        pEmpleado.setCargo(pResultSet.getString(pIndex));
+        pIndex++;
+        pEmpleado.setTelefono(pResultSet.getString(pIndex));
+        pIndex++;
+        pEmpleado.setDUI(pResultSet.getString(pIndex));
+        return pIndex;
+    }
+
     private static void obtenerDatos(PreparedStatement pPS, ArrayList<Empleado> pEmpleado) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) {
             while (resultSet.next()) {
-                Empleado empleados = new Empleado();
-                asignarDatosResultSet(empleados, resultSet, 0);
-                pEmpleado.add(empleados);
+                Empleado empleado = new Empleado();
+                asignarDatosResultSet(empleado, resultSet, 0);
+                pEmpleado.add(empleado);
             }
             resultSet.close();
         } catch (SQLException ex) {
@@ -166,39 +131,21 @@ public class EmpleadoDAL {
         }
     }
 
-    static int asignarDatosResultSet(Empleado pEmpleado, ResultSet pResultSet, int pIndex) throws Exception {
-        pIndex++;
-        pEmpleado.setId(pResultSet.getInt(pIndex));
-        pIndex++;
-        pEmpleado.setId(pResultSet.getInt(pIndex));
-        pIndex++;
-        pEmpleado.setNombre(pResultSet.getString(pIndex));
-        pIndex++;
-        pEmpleado.setApellido(pResultSet.getString(pIndex));
-        pIndex++;
-        pEmpleado.setLogin(pResultSet.getString(pIndex));
-        pIndex++;
-        pEmpleado.setEstatus(pResultSet.getByte(pIndex));
-        pIndex++;
-        pEmpleado.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate());
-        return pIndex;
-    }
-
     private static void obtenerDatosIncluirRol(PreparedStatement pPS, ArrayList<Empleado> pEmpleado) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) {
             HashMap<Integer, Rol> rolMap = new HashMap();
             while (resultSet.next()) {
-                Empleado empleados = new Empleado();
-                int index = asignarDatosResultSet(empleados, resultSet, 0);
-                if (rolMap.containsKey(empleados.getId()) == false) {
+                Empleado empleado = new Empleado();
+                int index = asignarDatosResultSet(empleado, resultSet, 0);
+                if (rolMap.containsKey(empleado.getId()) == false) {
                     Rol rol = new Rol();
                     RolDAL.asignarDatosResultSet(rol, resultSet, index);
                     rolMap.put(rol.getId(), rol);
-                    empleados.setRol(rol);
+                    empleado.setRol(rol);
                 } else {
-                    empleados.setRol(rolMap.get(empleados.getId()));
+                    empleado.setRol(rolMap.get(empleado.getId()));
                 }
-                pEmpleado.add(empleados);
+                pEmpleado.add(empleado);
             }
             resultSet.close();
         } catch (SQLException ex) {
@@ -211,7 +158,7 @@ public class EmpleadoDAL {
         ArrayList<Empleado> empleados = new ArrayList();
         try (Connection conn = ComunDB.obtenerConexion();) {
             String sql = obtenerSelect(pEmpleado);
-            sql += " WHERE a.Id=?";
+            sql += " WHERE e.Id=?";
             try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                 ps.setInt(1, pEmpleado.getId());
                 obtenerDatos(ps, empleados);
@@ -230,8 +177,7 @@ public class EmpleadoDAL {
     }
 
     public static ArrayList<Empleado> obtenerTodos() throws Exception {
-        ArrayList<Empleado> empleados;
-        empleados = new ArrayList<>();
+        ArrayList<Empleado> empleados = new ArrayList<>();
         try (Connection conn = ComunDB.obtenerConexion();) {
             String sql = obtenerSelect(new Empleado());
             sql += agregarOrderBy(new Empleado());
@@ -251,44 +197,50 @@ public class EmpleadoDAL {
     static void querySelect(Empleado pEmpleado, ComunDB.utilQuery pUtilQuery) throws SQLException {
         PreparedStatement statement = pUtilQuery.getStatement();
         if (pEmpleado.getId() > 0) {
-            pUtilQuery.AgregarNumWhere(" a.Id=? ");
+            pUtilQuery.AgregarNumWhere(" e.Id=? ");
             if (statement != null) {
                 statement.setInt(pUtilQuery.getNumWhere(), pEmpleado.getId());
             }
         }
 
-        if (pEmpleado.getId() > 0) {
-            pUtilQuery.AgregarNumWhere(" a.IdRol=? ");
+        if (pEmpleado.getIdRol() > 0) {
+            pUtilQuery.AgregarNumWhere(" e.IdRol=? ");
             if (statement != null) {
-                statement.setInt(pUtilQuery.getNumWhere(), pEmpleado.getId());
+                statement.setInt(pUtilQuery.getNumWhere(), pEmpleado.getIdRol());
             }
         }
 
         if (pEmpleado.getNombre() != null && pEmpleado.getNombre().trim().isEmpty() == false) {
-            pUtilQuery.AgregarNumWhere(" a.Nombre LIKE ? ");
+            pUtilQuery.AgregarNumWhere(" e.Nombre LIKE ? ");
             if (statement != null) {
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pEmpleado.getNombre() + "%");
             }
         }
 
         if (pEmpleado.getApellido() != null && pEmpleado.getApellido().trim().isEmpty() == false) {
-            pUtilQuery.AgregarNumWhere(" a.Apellido LIKE ? ");
+            pUtilQuery.AgregarNumWhere(" e.Apellido LIKE ? ");
             if (statement != null) {
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pEmpleado.getApellido() + "%");
             }
         }
 
-        if (pEmpleado.getLogin() != null && pEmpleado.getLogin().trim().isEmpty() == false) {
-            pUtilQuery.AgregarNumWhere(" a.Login=? ");
+        if (pEmpleado.getCargo() != null && pEmpleado.getCargo().trim().isEmpty() == false) {
+            pUtilQuery.AgregarNumWhere(" e.Cargo=? ");
             if (statement != null) {
-                statement.setString(pUtilQuery.getNumWhere(), pEmpleado.getLogin());
+                statement.setString(pUtilQuery.getNumWhere(), pEmpleado.getCargo());
             }
         }
 
-        if (pEmpleado.getEstatus() > 0) {
-            pUtilQuery.AgregarNumWhere(" a.Estatus=? ");
+        if (pEmpleado.getTelefono() != null && pEmpleado.getTelefono().trim().isEmpty() == false) {
+            pUtilQuery.AgregarNumWhere(" e.Telefono=? ");
             if (statement != null) {
-                statement.setInt(pUtilQuery.getNumWhere(), pEmpleado.getEstatus());
+                statement.setString(pUtilQuery.getNumWhere(), pEmpleado.getTelefono());
+            }
+        }
+        if (pEmpleado.getDUI() != null && pEmpleado.getTelefono().trim().isEmpty() == false) {
+            pUtilQuery.AgregarNumWhere(" e.DUI=? ");
+            if (statement != null) {
+                statement.setString(pUtilQuery.getNumWhere(), pEmpleado.getTelefono());
             }
         }
     }
@@ -319,62 +271,6 @@ public class EmpleadoDAL {
         return empleados;
     }
 
-    public static Empleado login(Empleado pEmpleado) throws Exception {
-        Empleado empleado = new Empleado();
-        ArrayList<Empleado> empleados = new ArrayList();
-        String password = encriptarMD5(pEmpleado.getPassword());
-        try (Connection conn = ComunDB.obtenerConexion();) {
-            String sql = obtenerSelect(pEmpleado);
-            sql += " WHERE a.Login=? AND a.Password=? AND a.Estatus=?";
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                ps.setString(1, pEmpleado.getLogin());
-                ps.setString(2, password);
-                ps.setByte(3, Empleado.EstatusEmpleado.ACTIVO);
-                obtenerDatos(ps, empleados);
-                ps.close();
-            } catch (SQLException ex) {
-                throw ex;
-            }
-            conn.close();
-        } catch (SQLException ex) {
-            throw ex;
-        }
-        if (empleados.size() > 0) {
-            empleado = empleados.get(0);
-        }
-        return empleado;
-    }
-
-    public static int cambiarPassword(Empleado pEmpleado, String pPasswordAnt) throws Exception {
-        int result;
-        String sql;
-        Empleado empleadoAnt = new Empleado();
-        empleadoAnt.setLogin(pEmpleado.getLogin());
-        empleadoAnt.setPassword(pPasswordAnt);
-        Empleado EmpleadoAut = login(empleadoAnt);
-
-        if (EmpleadoAut.getId() > 0 && EmpleadoAut.getLogin().equals(pEmpleado.getLogin())) {
-            try (Connection conn = ComunDB.obtenerConexion();) {
-                sql = "UPDATE Empleado SET Password=? WHERE Id=?";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setString(1, encriptarMD5(pEmpleado.getPassword()));
-                    ps.setInt(2, pEmpleado.getId());
-                    result = ps.executeUpdate();
-                    ps.close();
-                } catch (SQLException ex) {
-                    throw ex;
-                }
-                conn.close();
-            } catch (SQLException ex) {
-                throw ex;
-            }
-        } else {
-            result = 0;
-            throw new RuntimeException("El password actual es incorrecto");
-        }
-        return result;
-    }
-
     public static ArrayList<Empleado> buscarIncluirRol(Empleado pEmpleado) throws Exception {
         ArrayList<Empleado> empleados = new ArrayList();
         try (Connection conn = ComunDB.obtenerConexion();) {
@@ -385,8 +281,8 @@ public class EmpleadoDAL {
             sql += obtenerCampos();
             sql += ",";
             sql += RolDAL.obtenerCampos();
-            sql += " FROM Empleado a";
-            sql += " JOIN Rol r on (a.IdRol=r.Id)";
+            sql += " FROM Empleado e";
+            sql += " JOIN Rol c on (e.IdRol=c.Id)";
             ComunDB comundb = new ComunDB();
             ComunDB.utilQuery utilQuery = comundb.new utilQuery(sql, null, 0);
             querySelect(pEmpleado, utilQuery);

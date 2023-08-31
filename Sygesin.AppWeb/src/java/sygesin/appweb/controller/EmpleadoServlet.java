@@ -23,23 +23,14 @@ public class EmpleadoServlet extends HttpServlet {
         Empleado empleado = new Empleado();
         empleado.setNombre(Utilidad.getParameter(request, "nombre", ""));
         empleado.setApellido(Utilidad.getParameter(request, "apellido", ""));
-        empleado.setLogin(Utilidad.getParameter(request, "login", ""));
+        empleado.setCargo(Utilidad.getParameter(request, "cargo", ""));
+        empleado.setTelefono(Utilidad.getParameter(request, "telefono", ""));
+        empleado.setDUI(Utilidad.getParameter(request, "DUI", ""));
         empleado.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
-        empleado.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
 
         if (accion.equals("index")) {
             empleado.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
             empleado.setTop_aux(empleado.getTop_aux() == 0 ? Integer.MAX_VALUE : empleado.getTop_aux());
-        }
-
-        if (accion.equals("login") || accion.equals("create") || accion.equals("cambiarpass")) {
-            empleado.setPassword(Utilidad.getParameter(request, "password", ""));
-            empleado.setConfirmPassword_aux(Utilidad.getParameter(request, "confirmPassword_aux", ""));
-            if (accion.equals("cambiarpass")) {
-                empleado.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
-            }
-        } else {
-            empleado.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
         }
         return empleado;
     }
@@ -128,7 +119,7 @@ public class EmpleadoServlet extends HttpServlet {
 
     private void doGetRequestDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         requestObtenerPorId(request, response);
-        request.getRequestDispatcher("Views/Epleado/details.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Empleado/details.jsp").forward(request, response);
     }
 
     private void doGetRequestDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -151,140 +142,66 @@ public class EmpleadoServlet extends HttpServlet {
         }
     }
 
-    private void doGetRequestLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionEmployee.cerrarSession(request);
-        request.getRequestDispatcher("Views/Empleado/login.jsp").forward(request, response);
-    }
-
-    private void doPostRequestLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            Empleado empleado = obtenerEmpleado(request);
-            Empleado empleado_auth = EmpleadoDAL.login(empleado);
-            if (empleado_auth.getId() != 0 && empleado_auth.getLogin().equals(empleado.getLogin())) {
-                Rol rol = new Rol();
-                rol.setId(empleado_auth.getIdRol());
-                empleado_auth.setRol(RolDAL.obtenerPorId(rol));
-                SessionEmployee.autenticarEmployee(request, empleado_auth);
-                response.sendRedirect("Home");
-            } else {
-                request.setAttribute("error", "Credenciales incorrectas");
-                request.setAttribute("accion", "login");
-                doGetRequestLogin(request, response);
-            }
-        } catch (Exception ex) {
-            request.setAttribute("error", ex.getMessage());
-        }
-    }
-
-    private void doGetRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            Empleado empleado = new Empleado();
-            empleado.setLogin(SessionEmployee.getEmployee(request));
-            Empleado empleado_result = EmpleadoDAL.buscar(empleado).get(0);
-            if (empleado_result.getId() > 0) {
-                request.setAttribute("usuario", empleado_result);
-                request.getRequestDispatcher("Views/Empleado/cambiarPassword.jsp").forward(request, response);
-            } else {
-                Utilidad.enviarError("El Id:" + empleado_result.getId() + " no existe en la tabla de Empleado", request, response);
-            }
-        } catch (Exception ex) {
-            Utilidad.enviarError(ex.getMessage(), request, response);
-        }
-    }
-
-    private void doPostRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            Empleado usuario = obtenerEmpleado(request);
-            String passActual = Utilidad.getParameter(request, "passwordActual", "");
-            int result = EmpleadoDAL.cambiarPassword(usuario, passActual);
-            if (result != 0) {
-                response.sendRedirect("Empleado?accion=login");
-            } else {
-                Utilidad.enviarError("No se logro cambiar el password", request, response);
-            }
-        } catch (Exception ex) {
-            Utilidad.enviarError(ex.getMessage(), request, response);
-        }
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String accion = Utilidad.getParameter(request, "accion", "index");
-        if (accion.equals("login")) {
-            request.setAttribute("accion", accion);
-            doGetRequestLogin(request, response);
-        } else {
-            SessionUser.authorize(request, response, () -> {
-                switch (accion) {
-                    case "index":
-                        request.setAttribute("accion", accion);
-                        doGetRequestIndex(request, response);
-                        break;
-                    case "create":
-                        request.setAttribute("accion", accion);
-                        doGetRequestCreate(request, response);
-                        break;
-                    case "edit":
-                        request.setAttribute("accion", accion);
-                        doGetRequestEdit(request, response);
-                        break;
-                    case "delete":
-                        request.setAttribute("accion", accion);
-                        doGetRequestDelete(request, response);
-                        break;
-                    case "details":
-                        request.setAttribute("accion", accion);
-                        doGetRequestDetails(request, response);
-                        break;
-                    case "cambiarpass":
-                        request.setAttribute("accion", accion);
-                        doGetRequestCambiarPassword(request, response);
-                        break;
-                    default:
-                        request.setAttribute("accion", accion);
-                        doGetRequestIndex(request, response);
-                }
-            });
-        }
+        SessionUser.authorize(request, response, () -> {
+            String accion = Utilidad.getParameter(request, "accion", "index");
+            switch (accion) {
+                case "index":
+                    request.setAttribute("accion", accion);
+                    doGetRequestIndex(request, response);
+                    break;
+                case "create":
+                    request.setAttribute("accion", accion);
+                    doGetRequestCreate(request, response);
+                    break;
+                case "edit":
+                    request.setAttribute("accion", accion);
+                    doGetRequestEdit(request, response);
+                    break;
+                case "delete":
+                    request.setAttribute("accion", accion);
+                    doGetRequestDelete(request, response);
+                    break;
+                case "details":
+                    request.setAttribute("accion", accion);
+                    doGetRequestDetails(request, response);
+                    break;
+                default:
+                    request.setAttribute("accion", accion);
+                    doGetRequestIndex(request, response);
+            }
+        });
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String accion = Utilidad.getParameter(request, "accion", "index");
-        if (accion.equals("login")) {
-            request.setAttribute("accion", accion);
-            doPostRequestLogin(request, response);
-        } else {
-            SessionUser.authorize(request, response, () -> {
-                switch (accion) {
-                    case "index":
-                        request.setAttribute("accion", accion);
-                        doPostRequestIndex(request, response);
-                        break;
-                    case "create":
-                        request.setAttribute("accion", accion);
-                        doPostRequestCreate(request, response);
-                        break;
-                    case "edit":
-                        request.setAttribute("accion", accion);
-                        doPostRequestEdit(request, response);
-                        break;
-                    case "delete":
-                        request.setAttribute("accion", accion);
-                        doPostRequestDelete(request, response);
-                        break;
-                    case "cambiarpass":
-                        request.setAttribute("accion", accion);
-                        doPostRequestCambiarPassword(request, response);
-                        break;
-                    default:
-                        request.setAttribute("accion", accion);
-                        doGetRequestIndex(request, response);
-                }
-            });
-        }
+        SessionUser.authorize(request, response, () -> {
+            String accion = Utilidad.getParameter(request, "accion", "index");
+            switch (accion) {
+                case "index":
+                    request.setAttribute("accion", accion);
+                    doPostRequestIndex(request, response);
+                    break;
+                case "create":
+                    request.setAttribute("accion", accion);
+                    doPostRequestCreate(request, response);
+                    break;
+                case "edit":
+                    request.setAttribute("accion", accion);
+                    doPostRequestEdit(request, response);
+                    break;
+                case "delete":
+                    request.setAttribute("accion", accion);
+                    doPostRequestDelete(request, response);
+                    break;
+                default:
+                    request.setAttribute("accion", accion);
+                    doGetRequestIndex(request, response);
+            }
+        });
     }
 
 }

@@ -9,7 +9,7 @@ public class Administrador {
     private String apellido;
     private String login;
     private String password;
-    private byte estatus;
+    private byte estatusAdministrador;
     private LocalDate fechaRegistro;
     private int top_aux;
     private String confirmPassword_aux;
@@ -19,14 +19,14 @@ public class Administrador {
     public Administrador() {
     }
 
-    public Administrador(int id, int idRol, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol, ArrayList<Administrador> administradores) {
+    public Administrador(int id, int idRol, String nombre, String apellido, String login, String password, byte estatusAdministrador, LocalDate fechaRegistro, int top_aux, String confirmPassword_aux, Rol rol, ArrayList<Administrador> administradores) {
         this.id = id;
         this.idRol = idRol;
         this.nombre = nombre;
         this.apellido = apellido;
         this.login = login;
         this.password = password;
-        this.estatus = estatus;
+        this.estatusAdministrador = estatusAdministrador;
         this.fechaRegistro = fechaRegistro;
         this.top_aux = top_aux;
         this.confirmPassword_aux = confirmPassword_aux;
@@ -38,7 +38,7 @@ public class Administrador {
         return id;
     }
 
-    public int getRolId() {
+    public int getIdRol() {
         return idRol;
     }
 
@@ -59,7 +59,7 @@ public class Administrador {
     }
 
     public byte getEstatus() {
-        return estatus;
+        return estatusAdministrador;
     }
 
     public LocalDate getFechaRegistro() {
@@ -86,7 +86,7 @@ public class Administrador {
         this.id = id;
     }
 
-    public void setRolId(int rolId) {
+    public void setIdRol(int rolId) {
         this.idRol = rolId;
     }
 
@@ -107,7 +107,7 @@ public class Administrador {
     }
 
     public void setEstatus(byte estatus) {
-        this.estatus = estatus;
+        this.estatusAdministrador = estatus;
     }
 
     public void setFechaRegistro(LocalDate fechaRegistro) {
@@ -130,7 +130,7 @@ public class Administrador {
         this.administradores = administradores;
     }
 
-   public class EstatusAdninistrador{
+   public class EstatusAdministrador{
  public static final byte ACTIVO=1;
  public static final byte INACTIVO=2;
 }

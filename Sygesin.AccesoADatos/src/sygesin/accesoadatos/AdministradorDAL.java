@@ -25,7 +25,7 @@ public class AdministradorDAL {
     }
 
     static String obtenerCampos() {
-        return "a.Id, a.IdRol, a.Nombre, a.Apellido, a.Login, a.Estatus, a.FechaRegistro";
+        return "a.Id, a.IdRol, a.Nombre, a.Apellido, a.Login, a.EstatusAdministrador, a.FechaRegistro";
     }
 
     private static String obtenerSelect(Administrador pAdmin) {
@@ -78,7 +78,7 @@ public class AdministradorDAL {
         boolean existe = existeLogin(pAdmin);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {
-                sql = "INSERT INTO Administrador(IdRol,Nombre,Apellido,Login,Pass,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Administrador(IdRol,Nombre,Apellido,Login,Password,EstatusAdministrador,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                     ps.setInt(1, pAdmin.getId());
                     ps.setString(2, pAdmin.getNombre());
@@ -109,9 +109,9 @@ public class AdministradorDAL {
         boolean existe = existeLogin(pAdmin);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {                
-                sql = "UPDATE Administrador SET RolId=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
+                sql = "UPDATE Administrador SET RolId=?, Nombre=?, Apellido=?, Login=?, EstatusAdministrador=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pAdmin.getRolId());
+                    ps.setInt(1, pAdmin.getIdRol());
                     ps.setString(2, pAdmin.getNombre());  
                     ps.setString(3, pAdmin.getApellido());
                     ps.setString(4, pAdmin.getLogin());
@@ -292,7 +292,7 @@ public class AdministradorDAL {
         }
 
         if (pAdmin.getEstatus() > 0) {
-            pUtilQuery.AgregarNumWhere(" a.Estatus=? ");
+            pUtilQuery.AgregarNumWhere(" a.EstatusAdministrador=? ");
             if (statement != null) {
                 statement.setInt(pUtilQuery.getNumWhere(), pAdmin.getEstatus());
             }
@@ -332,11 +332,11 @@ public class AdministradorDAL {
         String password = encriptarMD5(pAdmin.getPassword());
         try (Connection conn = ComunDB.obtenerConexion();) {
             String sql = obtenerSelect(pAdmin);
-            sql += " WHERE a.Login=? AND a.Password=? AND a.Estatus=?";
+            sql += " WHERE a.Login=? AND a.Password=? AND a.EstatusAdministrador=?";
             try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                 ps.setString(1, pAdmin.getLogin());
                 ps.setString(2, password);
-                ps.setByte(3, Administrador.EstatusAdninistrador.ACTIVO);
+                ps.setByte(3, Administrador.EstatusAdministrador.ACTIVO);
                 obtenerDatos(ps, administradores);
                 ps.close();
             } catch (SQLException ex) {

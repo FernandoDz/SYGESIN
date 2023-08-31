@@ -37,7 +37,7 @@
                         <span id="txtConfirmPassword_aux_error" style="color:red" class="helper-text"></span>
                     </div> 
                     <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus" class="validate">
+                        <select id="slEstatus" name="estatusAdministrador" class="validate">
                             <option value="0">SELECCIONAR</option>
                             <option value="<%=Administrador.EstatusAdministrador.ACTIVO%>">ACTIVO</option>
                             <option value="<%=Administrador.EstatusAdministrador.INACTIVO%>">INACTIVO</option>
