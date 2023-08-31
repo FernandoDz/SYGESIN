@@ -30,7 +30,7 @@
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Buscar Empleado</h5>
-            <form action="Empresa" method="post">
+            <form action="Empleado" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                  <div class="row">
                     <div class="input-field col l4 s12">
@@ -102,7 +102,7 @@
                                     <td><%=empleado.getCargo()%></td>  
                                     <td><%=empleado.getTelefono()%></td>
                                     <td><%=empleado.getDUI()%></td>
-                                    <td><%=empleado.getRol().getNombre()%></td>  
+                                    <td><%=empleado.getIdRol().getNombre()%></td>  
                                     <td>
                                         <div style="display:flex">
                                              <a href="Empleado?accion=edit&id=<%=empleado.getId()%>" title="Modificar" class="waves-effect waves-light btn green">

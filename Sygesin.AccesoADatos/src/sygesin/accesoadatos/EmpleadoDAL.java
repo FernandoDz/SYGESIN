@@ -143,7 +143,7 @@ public class EmpleadoDAL {
                     rolMap.put(rol.getId(), rol);
                     empleado.setRol(rol);
                 } else {
-                    empleado.setRol(rolMap.get(empleado.getId()));
+                    empleado.setRol(rolMap.get(empleado.getIdRol()));
                 }
                 pEmpleado.add(empleado);
             }
