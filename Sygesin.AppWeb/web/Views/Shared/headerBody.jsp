@@ -21,7 +21,8 @@
             <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Home</a></li>
             
             <li><a class="text-sm text-blue-600 font-bold" href="Rol?accion=index">Rol</a></li>
-            
+            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Estudiante?accion=index">Estudiante</a></li>
+          
             <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Usuario?accion=index">Usuarios</a></li>
            
             <li><a class="text-sm text-gray-400 hover:text-gray-500" href="Usuario?accion=cambiarpass">Cambiar Password</a></li>

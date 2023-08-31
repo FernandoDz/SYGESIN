@@ -1,4 +1,3 @@
-<%@page import="sygesin.entidadesdenegocio.Estudiante"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

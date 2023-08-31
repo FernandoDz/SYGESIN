@@ -16,58 +16,48 @@
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <input type="hidden" name="id" value="<%=estudiante.getId()%>">  
                 <div class="row">
-                    <div class="input-field col l4 s12">
-                        <input  id="txtSeccionId" type="text" name="seccionId" value="<%=estudiante.getSeccionId()%>" required class="validate" maxlength="30">
-                        <label for="txtSeccionId">SeccionId</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtNombre" type="text" name="nombre" value="<%=estudiante.getNombre()%>" required class="validate" maxlength="30">
+                    <div class="row">
+                    <div class="input-field col l6 s12">
+                        <input  id="txtIdRol" type="text" name="idrol">
+                        <label for="txtIdRol">Rol</label>
+                    </div>
+                    <div class="input-field col l6 s12">
+                        <input  id="txtNombre" type="text" name="nombre">
                         <label for="txtNombre">Nombre</label>
-                    </div>                       
-                    <div class="input-field col l4 s12">
-                        <input  id="txtApellido" type="text" name="apellido" value="<%=estudiante.getApellido()%>" required class="validate" maxlength="30">
+                    </div>
+                    
+                    <div class="input-field col l6 s12">
+                        <input  id="txtApellido" type="text" name="apellido">
                         <label for="txtApellido">Apellido</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
-                        <input  id="txtDireccion" type="text" name="direccion" value="<%=estudiante.getDireccion()%>" required class="validate" maxlength="30">
+                    </div>
+                     <div class="input-field col l6 s12">
+                        <input  id="txtDireccion" type="text" name="direccion">
                         <label for="txtDireccion">Direccion</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtDepartamento" type="text" name="departamento" value="<%=estudiante.getDepartamento()%>" required class="validate" maxlength="30">
+                    </div>
+                    <div class="input-field col l6 s12">
+                        <input  id="txtDepartamento" type="text" name="departamento">
                         <label for="txtDepartamento">Departamento</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
-                        <input  id="txtTelefono" type="text" name="telefono" value="<%=estudiante.getTelefono()%>" required class="validate" maxlength="30">
+                    </div>
+                    <div class="input-field col l6 s12">
+                        <input  id="txtTelefono" type="text" name="telefono">
                         <label for="txtTelefono">Telefono</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtCorreo" type="text" name="correo" value="<%=estudiante.getCorreo()%>" required class="validate" maxlength="30">
+                    </div>
+                     <div class="input-field col l6 s12">
+                        <input  id="txtCorreo" type="text" name="correo">
                         <label for="txtCorreo">Correo</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
-                        <input  id="txtEncargado" type="text" name="encargado" value="<%=estudiante.getEncargado()%>" required class="validate" maxlength="30">
+                    </div>
+                    <div class="input-field col l6 s12">
+                        <input  id="txtEncargado" type="text" name="encargado">
                         <label for="txtEncargado">Encargado</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
-                        <input  id="txtSeccion" type="text" name="seccion" value="<%=estudiante.getSeccion()%>" required class="validate" maxlength="30">
+                    </div>
+                     <div class="input-field col l6 s12">
+                        <input  id="txtSeccion" type="text" name="seccion">
                         <label for="txtSeccion">Seccion</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
-                        <input  id="txtFechanacimiento" type="text" name="fechanacimiento" value="<%=estudiante.getFechanacimiento()%>" reSquired class="validate" maxlength="30">
-                        <label for="txtFechanacimiento">Fechanacimiento</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtLogin" type="text" name="login" value="<%=estudiante.getLogin()%>" required  class="validate" maxlength="25">
-                        <label for="txtLogin">Login</label>
-                    </div>   
-                    <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus" class="validate">
-                            <option value="0" <%=(estudiante.getEstatus() == 10) ? "selected" : ""%>>SELECCIONAR</option>
-                            <option value="<%=Estudiante.EstatusEstudiante.ACTIVO%>"  <%=(estudiante.getEstatus() == Estudiante.EstatusEstudiante.ACTIVO) ? "selected" : ""%>>ACTIVO</option>
-                            <option value="<%=Estudiante.EstatusEstudiante.INACTIVO%>"  <%=(estudiante.getEstatus() == Estudiante.EstatusEstudiante.INACTIVO) ? "selected" : ""%>>INACTIVO</option>
-                        </select>       
-                        <label for="slEstatus">Estatus</label>
-                        <span id="slEstatus_error" style="color:red" class="helper-text"></span>
+                    </div>
+                    
+                     <div class="input-field col l6 s12">
+                        <input  id="txtfechanacimiento" type="text" name="fechanacimiento">
+                        <label for="txtfechanacimiento">Fecha de nacimiento</label>
                     </div>
                     <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Rol/select.jsp">                           

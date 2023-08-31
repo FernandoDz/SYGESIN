@@ -109,7 +109,7 @@ public class AdministradorDAL {
         boolean existe = existeLogin(pAdmin);
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) {                
-                sql = "UPDATE Administrador SET RolId=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
+                sql = "UPDATE Administrador SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                     ps.setInt(1, pAdmin.getRolId());
                     ps.setString(2, pAdmin.getNombre());  
