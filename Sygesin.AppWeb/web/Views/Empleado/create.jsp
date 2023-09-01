@@ -10,8 +10,8 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Crear Empleado</h5>
-            <form action="Empresa" method="post" onsubmit="return  validarFormulario()">
+            <h5 class="font-semibold m-5">Crear Empleado</h5>
+            <form action="Empleado" method="post" onsubmit="return  validarFormulario()">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">
                     <div class="input-field col l4 s12">
@@ -20,7 +20,7 @@
                     </div>                       
                     <div class="input-field col l4 s12">
                         <input  id="txtApellido" type="text" name="apellido" required class="validate" maxlength="30">
-                        <label for="txtRubro">Apellido</label>
+                        <label for="txtApellido">Apellido</label>
                     </div> 
                     <div class="input-field col l4 s12">
                         <input  id="txtCargo" type="text" name="cargo" required class="validate" maxlength="25">
@@ -35,7 +35,7 @@
                         <label for="txtDUI">DUI</label>
                     </div>  
                     <div class="input-field col l4 s12">   
-                        <jsp:include page="/Views/Contacto/select.jsp">                           
+                        <jsp:include page="/Views/Rol/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>  
                         <span id="slRol_error" style="color:red" class="helper-text"></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
+                        <button type="submit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
                         <a href="Empleado" class="waves-effect waves-light btn blue"><i class="material-icons right">cancel</i>Cancelar</a>                          
                     </div>
                 </div>

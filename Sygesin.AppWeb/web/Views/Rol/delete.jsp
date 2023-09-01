@@ -12,7 +12,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Eliminar Rol</h5>          
+            <h5 class="font-semibold m-5 ">Eliminar Rol</h5>          
             <form action="Rol" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">   
                 <input type="hidden" name="id" value="<%=rol.getId()%>">   

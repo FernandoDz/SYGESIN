@@ -17,7 +17,7 @@ public class EmpleadoDAL {
         if (pEmpleado.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
             sql += "TOP " + pEmpleado.getTop_aux() + " ";
         }
-        sql += (obtenerCampos() + "FROM Empleado e");
+        sql += (obtenerCampos() + " FROM Empleado e");
         return sql;
     }
 

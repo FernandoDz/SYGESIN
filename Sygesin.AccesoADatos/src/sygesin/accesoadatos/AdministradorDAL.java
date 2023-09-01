@@ -80,7 +80,7 @@ public class AdministradorDAL {
             try (Connection conn = ComunDB.obtenerConexion();) {
                 sql = "INSERT INTO Administrador(IdRol,Nombre,Apellido,Login,Password,EstatusAdministrador,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                    ps.setInt(1, pAdmin.getId());
+                    ps.setInt(1, pAdmin.getIdRol());
                     ps.setString(2, pAdmin.getNombre());
                     ps.setString(3, pAdmin.getApellido()); 
                     ps.setString(4, pAdmin.getLogin());

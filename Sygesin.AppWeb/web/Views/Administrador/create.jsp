@@ -11,7 +11,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Crear Administrador</h5>
+            <h5 class="font-semibold m-5">Crear Administrador</h5>
             <form action="Administrador" method="post" onsubmit="return  validarFormulario()">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">

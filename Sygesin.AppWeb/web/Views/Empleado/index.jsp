@@ -32,7 +32,7 @@
             <h5 class="font-semibold m-5 text-center">Buscar Empleado</h5>
             <form action="Empleado" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
-                 <div class="row">
+                <div class="row">
                     <div class="input-field col l4 s12">
                         <input id="txtNombre" type="text" name="nombre"  maxlength="50">
                         <label for="txtNombre">Nombre</label>
@@ -89,7 +89,14 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-gray-600 text-sm font-light">
-                                    <% for (Empleado empleado : empleados) { %>
+                                    <% for (Empleado empleado : empleados) {
+                                       int tempNumPage = numPage;
+                                       if (numPage > 1) {
+                                           countReg++;
+                                           double divTempNumPage = (double) countReg / (double) numReg;
+                                           tempNumPage = (int) Math.ceil(divTempNumPage);
+                                       }
+                                    %>
                                     <tr>
                                         <td class="py-3 px-6 text-left"><%=empleado.getNombre()%></td>  
                                         <td class="py-3 px-6 text-left"><%=empleado.getApellido()%></td>

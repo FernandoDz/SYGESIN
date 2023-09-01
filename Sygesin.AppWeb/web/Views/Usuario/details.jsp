@@ -11,7 +11,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Detalle de Usuario</h5>
+            <h5 class="font-semibold m-5 ">Detalle de Usuario</h5>
              <div class="row">
                     <div class="input-field col l4 s12">
                         <input  id="txtNombre" type="text" value="<%=usuario.getNombre()%>" disabled>

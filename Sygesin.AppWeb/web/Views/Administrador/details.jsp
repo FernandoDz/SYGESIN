@@ -12,7 +12,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Detalle de Administrador</h5>
+            <h5 class="font-semibold">Detalle de Administrador</h5>
              <div class="row">
                     <div class="input-field col l4 s12">
                         <input  id="txtNombre" type="text" value="<%=administrador.getNombre()%>" disabled>

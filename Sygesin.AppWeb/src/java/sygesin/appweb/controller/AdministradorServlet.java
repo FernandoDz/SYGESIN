@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import sygesin.accesoadatos.RolDAL;
 import sygesin.accesoadatos.AdministradorDAL;
 import sygesin.accesoadatos.RolDAL;
 import sygesin.appweb.utils.*;
@@ -18,7 +17,9 @@ import sygesin.entidadesdenegocio.Administrador;
 
 @WebServlet(name = "AdministradorServlet", urlPatterns = {"/Administrador"})
 public class AdministradorServlet extends HttpServlet {
-  private Administrador obtenerAdministrador(HttpServletRequest request) {
+
+    private Administrador obtenerAdministrador(HttpServletRequest request) {
+
         String accion = Utilidad.getParameter(request, "accion", "index");
         Administrador administrador = new Administrador();
         administrador.setNombre(Utilidad.getParameter(request, "nombre", ""));
@@ -33,7 +34,7 @@ public class AdministradorServlet extends HttpServlet {
         }
 
         if (accion.equals("login") || accion.equals("create") || accion.equals("cambiarpass")) {
-            administrador.setPassword(Utilidad.getParameter(request, "password", ""));
+           administrador.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
             administrador.setConfirmPassword_aux(Utilidad.getParameter(request, "confirmPassword_aux", ""));
             if (accion.equals("cambiarpass")) {
                 administrador.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
@@ -287,6 +288,5 @@ public class AdministradorServlet extends HttpServlet {
             });
         }
     }
-
 
 }

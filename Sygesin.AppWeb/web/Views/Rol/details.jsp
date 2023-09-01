@@ -12,7 +12,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Detalle de Rol</h5>
+            <h5 class="font-semibold m-5 ">Detalle de Rol</h5>
             <div class="row">
                 <div class="input-field col l4 s12">
                     <input disabled  id="txtNombre" type="text" value="<%=rol.getNombre()%>">

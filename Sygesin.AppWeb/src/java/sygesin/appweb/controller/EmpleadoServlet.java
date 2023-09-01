@@ -19,8 +19,11 @@ import sygesin.entidadesdenegocio.Empleado;
 public class EmpleadoServlet extends HttpServlet {
 
     private Empleado obtenerEmpleado(HttpServletRequest request) {
-        String accion = Utilidad.getParameter(request, "accion", "index");
+       String accion = Utilidad.getParameter(request, "accion", "index");
         Empleado empleado = new Empleado();
+        if (accion.equals("create") == false) {
+            empleado.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
+        }
         empleado.setNombre(Utilidad.getParameter(request, "nombre", ""));
         empleado.setApellido(Utilidad.getParameter(request, "apellido", ""));
         empleado.setCargo(Utilidad.getParameter(request, "cargo", ""));
