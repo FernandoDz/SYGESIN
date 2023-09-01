@@ -38,10 +38,10 @@ public class EstudianteDAL {
         int result;
         String sql;
         try (Connection conn = ComunDB.obtenerConexion();) { 
-            sql = "INSERT INTO Estudiante(IdRol,Nombre,Apellido,Direccion,Departamento,Telefono,Correo, Encargado, Seccion,Fechanacimiento ) VALUES(?,?,?,?,?,?,?,?,?,?,?))";
+            sql = "INSERT INTO Estudiante(IdRol,Nombre,Apellido,Direccion,Departamento,Telefono,Correo, Encargado, Seccion,Fechanacimiento ) VALUES(?,?,?,?,?,?,?,?,?,?)";
             try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
                    
-                    ps.setInt(1, pEstudiante.getIdrol());
+                    ps.setInt(1, pEstudiante.getIdRol());
                     ps.setString(2, pEstudiante.getNombre());
                     ps.setString(3, pEstudiante.getApellido());
                     ps.setString(4, pEstudiante.getDireccion());
@@ -69,9 +69,9 @@ public class EstudianteDAL {
         int result;
         String sql;
         try (Connection conn = ComunDB.obtenerConexion();) {
-            sql = "UPDATE Rol SET Nombre=?IdRol=?,Apellido=?,Direccion=?,Departamento=?,Telefono=?,Correo=?, Encargado=?, Seccion=?,Fechanacimiento=?  WHERE Id=?";
+            sql = "UPDATE Estudiante SET IdRol=?,Nombre=?,Apellido=?,Direccion=?,Departamento=?,Telefono=?,Correo=?, Encargado=?, Seccion=?,Fechanacimiento=?  WHERE Id=?";
             try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-               ps.setInt(1, pEstudiante.getIdrol());
+                   ps.setInt(1, pEstudiante.getIdRol());
                     ps.setString(2, pEstudiante.getNombre());
                     ps.setString(3, pEstudiante.getApellido());
                     ps.setString(4, pEstudiante.getDireccion());
@@ -81,6 +81,8 @@ public class EstudianteDAL {
                     ps.setString(8, pEstudiante.getEncargado());
                     ps.setString(9, pEstudiante.getSeccion());
                     ps.setString(10, pEstudiante.getFechanacimiento());
+                    ps.setInt(11, pEstudiante.getId());
+                    
                 result = ps.executeUpdate();
                 ps.close();
             } catch (SQLException ex) {
@@ -118,7 +120,7 @@ public class EstudianteDAL {
         pIndex++;
         pEstudiante.setId(pResultSet.getInt(pIndex)); 
         pIndex++;
-        pEstudiante.setIdrol(pResultSet.getInt(pIndex)); 
+        pEstudiante.setIdRol(pResultSet.getInt(pIndex)); 
         pIndex++;
         pEstudiante.setNombre(pResultSet.getString(pIndex)); 
         pIndex++;

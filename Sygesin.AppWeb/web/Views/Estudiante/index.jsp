@@ -45,6 +45,12 @@
                     <input id="txtDireccion" type="text" name="direccion">
                     <label for="txtDireccion">Direccion</label>
                 </div>
+                
+                 <div class="input-field col l6 s12">
+                    <input id="txtDepartamento" type="text" name="departamento">
+                    <label for="txtDepartamento">Departamento</label>
+                </div>
+                
                 <div class="input-field col l6 s12">
                     <input id="txtTelefono" type="text" name="telefono">
                     <label for="txtTelefono">Telefono</label>
@@ -60,6 +66,11 @@
                 <div class="input-field col l6 s12">
                     <input id="txtSeccion" type="text" name="seccion">
                     <label for="txtSeccion">Seccion</label>
+                </div>
+                
+                <div class="input-field col l6 s12">
+                    <input id="txtFechanacimiento" type="text" name="fechanacimiento">
+                    <label for="txtFechanacimiento">Fecha de nacimiento</label>
                 </div>
                 <div class="input-field col l4 s12">
                     <jsp:include page="/Views/Rol/select.jsp">
@@ -94,7 +105,7 @@
                                     <th class="py-3 px-6 text-left">Correo</th>
                                     <th class="py-3 px-6 text-left">Encargado</th>
                                     <th class="py-3 px-6 text-left">Seccion</th>
-                                    <th class="py-3 px-6 text-center">Acciones</th>
+                                    <th class="py-3 px-6 text-center">Fechanacimiento</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 text-sm font-light">
@@ -108,6 +119,7 @@
                                         <td class="py-3 px-6 text-left"><%=estudiante.getCorreo()%></td>
                                         <td class="py-3 px-6 text-left"><%=estudiante.getEncargado()%></td>
                                         <td class="py-3 px-6 text-left"><%=estudiante.getSeccion()%></td>
+                                           <td class="py-3 px-6 text-left"><%=estudiante.getFechanacimiento()%></td>
                                         <td class="py-3 px-6 text-center">
                                             <div class="flex item-center justify-center">
                                                 <a href="Estudiante?accion=edit&id=<%=estudiante.getId()%>" title="Modificar" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 px-5">
