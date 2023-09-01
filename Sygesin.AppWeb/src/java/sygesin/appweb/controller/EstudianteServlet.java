@@ -24,7 +24,7 @@ public class EstudianteServlet extends HttpServlet {
         if (accion.equals("create") == false) {
             estudiante.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
         }
-        estudiante.setIdrol(Integer.parseInt(Utilidad.getParameter(request, "idrol", "0")));
+        estudiante.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
         estudiante.setNombre(Utilidad.getParameter(request, "nombre", ""));
        estudiante.setApellido(Utilidad.getParameter(request, "apellido", ""));
        estudiante.setDireccion(Utilidad.getParameter(request, "direccion", ""));

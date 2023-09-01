@@ -5,7 +5,7 @@
 <html>
     <head>
         <jsp:include page="/Views/Shared/title.jsp" />
-        <title>Crear Empresa</title>
+        <title>Crear Estudiante</title>
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
@@ -21,38 +21,38 @@
                     </div>
                     
                     <div class="input-field col l4 s12">
-                        <input  id="txtApellido" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtApellido" type="text" name="apellido" required class="validate" maxlength="50">
                         <label for="txtApellido">Apellido</label>
                     </div
                     
                     <div class="input-field col l4 s12">
-                        <input  id="txtDireccion" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtDireccion" type="text" name="direccion" required class="validate" maxlength="50">
                         <label for="txtDireccion">Direccion</label>
                     </div>  
                     <div class="input-field col l4 s12">
-                        <input  id="txtDepartamento" type="text" name="nombre" required class="validate" maxlength="50">
-                        <label for="txtDepartamento">Direccion</label>
+                        <input  id="txtDepartamento" type="text" name="departamento" required class="validate" maxlength="50">
+                        <label for="txtDepartamento">Departamento</label>
                     </div>  
                     <div class="input-field col l4 s12">
-                        <input  id="txtTelefono" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtTelefono" type="text" name="telefono" required class="validate" maxlength="50">
                         <label for="txtTelefono">Telefono</label>
                     </div> 
                     
                        <div class="input-field col l4 s12">
-                        <input  id="txtCorreo" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtCorreo" type="text" name="correo" required class="validate" maxlength="50">
                         <label for="txtCorreo">Correo</label>
                     </div>
                     
                      <div class="input-field col l4 s12">
-                        <input  id="txtEncargado" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtEncargado" type="text" name="encargado" required class="validate" maxlength="50">
                         <label for="txtEncargado">Encargado</label>
                     </div>
                     <div class="input-field col l4 s12">
-                        <input  id="txtSeccion" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtSeccion" type="text" name="seccion" required class="validate" maxlength="50">
                         <label for="txtSeccion">Seccion</label>
                     </div>
                     <div class="input-field col l4 s12">
-                        <input  id="txtFechanacimiento" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input  id="txtFechanacimiento" type="text" name="fechanacimiento" required class="validate" maxlength="50">
                         <label for="txtFechanacimiento">Fecha de nacimiento</label>
                     </div>
                     <div class="input-field col l4 s12">   
@@ -75,13 +75,13 @@
         <script>
             function validarFormulario() {
                 var result = true;
-                var slEstudiante = document.getElementById("slContacto");
-                var slEstudiante_error = document.getElementById("slContacto_error");
-                if (slContacto.value == 0) {
-                    slContacto_error.innerHTML = "El Estudiante es obligatorio";
+                var slEstudiante = document.getElementById("slEstudiante");
+                var slEstudiante_error = document.getElementById("slEstudiante_error");
+                if (slEstudiante.value == 0) {
+                    slEstudiante_error.innerHTML = "El Estudiante es obligatorio";
                     result = false;
                 } else {
-                    slContacto_error.innerHTML = "";
+                    slEstudiante_error.innerHTML = "";
                 }
 
                 return result;

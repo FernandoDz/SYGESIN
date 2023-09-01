@@ -6,8 +6,8 @@ package sygesin.entidadesdenegocio;
 
 public class Estudiante {
     
-  private int id;
-    private int idrol;
+    private int id;
+    private int idRol;
     private String nombre;
     private String apellido;
     private String direccion;
@@ -17,16 +17,15 @@ public class Estudiante {
     private String encargado;
      private String seccion;
       private String fechanacimiento;
-   
     private int top_aux;
     private Rol rol;
     
     public Estudiante() {
     }
 
-    public Estudiante(int id, int idrol, String nombre, String apellido, String direccion, String departamento, String telefono, String correo, String encargado, String seccion, String fechanacimiento, int top_aux, Rol rol) {
+    public Estudiante(int id, int idRol, String nombre, String apellido, String direccion, String departamento, String telefono, String correo, String encargado, String seccion, String fechanacimiento, int top_aux, Rol rol) {
         this.id = id;
-        this.idrol = idrol;
+        this.idRol = idRol;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
@@ -44,8 +43,8 @@ public class Estudiante {
         return id;
     }
 
-    public int getIdrol() {
-        return idrol;
+    public int getIdRol() {
+        return idRol;
     }
 
     public String getNombre() {
@@ -96,8 +95,8 @@ public class Estudiante {
         this.id = id;
     }
 
-    public void setIdrol(int idrol) {
-        this.idrol = idrol;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
     public void setNombre(String nombre) {
@@ -144,6 +143,9 @@ public class Estudiante {
         this.rol = rol;
     }
 
+   
+
+    
     
 
     
