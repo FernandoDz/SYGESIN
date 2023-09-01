@@ -3,7 +3,7 @@
 <%@page import="sygesin.entidadesdenegocio.Rol"%>
 <%@page import="java.util.ArrayList"%>
 
-<% ArrayList<Empleado> empleado = (ArrayList<Empleado>) request.getAttribute("empleados");
+<% ArrayList<Empleado> empleados = (ArrayList<Empleado>) request.getAttribute("empleados");
     int numPage = 1;
     int numReg = 10;
     int countReg = 0;
@@ -29,31 +29,31 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Buscar Empleado</h5>
+            <h5 class="font-semibold m-5 text-center">Buscar Empleado</h5>
             <form action="Empleado" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                  <div class="row">
                     <div class="input-field col l4 s12">
-                        <input  id="txtNombre" type="text" name="nombre" required class="validate" maxlength="50">
+                        <input id="txtNombre" type="text" name="nombre"  maxlength="50">
                         <label for="txtNombre">Nombre</label>
                     </div>                       
                     <div class="input-field col l4 s12">
-                        <input  id="txtApellido" type="text" name="apellido" required class="validate" maxlength="30">
+                        <input id="txtApellido" type="text" name="apellido"  maxlength="30">
                         <label for="txtRubro">Apellido</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtCargo" type="text" name="cargo" required class="validate" maxlength="25">
+                        <input id="txtCargo" type="text" name="cargo"  maxlength="25">
                         <label for="txtCategoria">Cargo</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtTelefono" type="text" name="telefono" required class="validate" minlength="5" maxlength="32">
+                        <input id="txtTelefono" type="text" name="telefono"  minlength="5" maxlength="32">
                         <label for="txtTelefono">Telefono</label>
                     </div>  
                     <div class="input-field col l4 s12">
-                        <input  id="txtDUI" type="text" name="DUI" required class="validate" minlength="5" maxlength="32">
+                        <input id="txtDUI" type="text" name="DUI" minlength="5" maxlength="32">
                         <label for="txtDUI">DUI</label>
                     </div>  
-                      <div class="input-field col l4 s12">   
+                    <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Rol/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>                        
@@ -66,63 +66,59 @@
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">search</i>Buscar</button>
+                        <button type="submit" class="waves-effect waves-light btn blue"><i class="material-icons right">search</i>Buscar</button>
                         <a href="Empleado?accion=create" class="waves-effect waves-light btn blue"><i class="material-icons right">add</i>Crear</a>                          
                     </div>
                 </div>
             </form>
 
-            <div class="row">
-                <div class="col l12 s12">
-                    <div style="overflow: auto">
-                        <table class="paginationjs">
-                            <thead>
-                                <tr>                                     
-                                    <th>Nombre</th>  
-                                    <th>Apellido</th> 
-                                    <th>Cargo</th>  
-                                    <th>Telefono</th>  
-                                    <th>DUI</th> 
-                                    <th>Rol</th> 
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>                       
-                            <tbody>                           
-                                <% for (Empleado empleado : empleados) {
-                                        int tempNumPage = numPage;
-                                        if (numPage > 1) {
-                                            countReg++;
-                                            double divTempNumPage = (double) countReg / (double) numReg;
-                                            tempNumPage = (int) Math.ceil(divTempNumPage);
-                                        }
-                                %>
-                                <tr data-page="<%= tempNumPage%>">                                    
-                                    <td><%=empleado.getNombre()%></td>  
-                                    <td><%=empleado.getApellido()%></td>
-                                    <td><%=empleado.getCargo()%></td>  
-                                    <td><%=empleado.getTelefono()%></td>
-                                    <td><%=empleado.getDUI()%></td>
-                                    <td><%=empleado.getIdRol().getNombre()%></td>  
-                                    <td>
-                                        <div style="display:flex">
-                                             <a href="Empleado?accion=edit&id=<%=empleado.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <a href="Empleado?accion=details&id=<%=empleado.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
-                                            <i class="material-icons">description</i>
-                                        </a>
-                                        <a href="Empleado?accion=delete&id=<%=empleado.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
-                                            <i class="material-icons">delete</i>
-                                        </a>    
-                                        </div>                                                                    
-                                    </td>                                   
-                                </tr>
-                                <%}%>                                                       
-                            </tbody>
-                        </table>
-                    </div>                  
+            <div class="overflow-x-auto">
+                <div class="flex items-center justify-start font-sans overflow-hidden">
+                    <div class="w-full lg:w-5/6">
+                        <div class="bg-white shadow-md rounded my-6">
+                            <table class="min-w-max w-full table-auto">
+                                <thead>
+                                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                        <th class="py-3 px-6 text-left">Nombre</th>
+                                        <th class="py-3 px-6 text-left">Apellido</th>
+                                        <th class="py-3 px-6 text-left">Cargo</th>
+                                        <th class="py-3 px-6 text-left">Telefono</th>
+                                        <th class="py-3 px-6 text-left">DUI</th>
+                                        <th class="py-3 px-6 text-left">Rol</th>
+                                        <th class="py-3 px-6 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-600 text-sm font-light">
+                                    <% for (Empleado empleado : empleados) { %>
+                                    <tr>
+                                        <td class="py-3 px-6 text-left"><%=empleado.getNombre()%></td>  
+                                        <td class="py-3 px-6 text-left"><%=empleado.getApellido()%></td>
+                                        <td class="py-3 px-6 text-left"><%=empleado.getCargo()%></td>  
+                                        <td class="py-3 px-6 text-left"><%=empleado.getTelefono()%></td>
+                                        <td class="py-3 px-6 text-left"><%=empleado.getDUI()%></td>
+                                        <td class="py-3 px-6 text-left"><%=empleado.getRol().getNombre()%></td>  
+                                        <td class="py-3 px-6 text-center">
+                                            <div class="flex item-center justify-center">
+                                                <a href="Empleado?accion=edit&id=<%=empleado.getId()%>" title="Modificar" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 px-5">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                                <a href="Empleado?accion=details&id=<%=empleado.getId()%>" title="Ver" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 px-5">
+                                                    <i class="material-icons">description</i>
+                                                </a>
+                                                <a href="Empleado?accion=delete&id=<%=empleado.getId()%>" title="Eliminar" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 px-5">
+                                                    <i class="material-icons">delete</i>
+                                                </a>  
+                                            </div>                                                                    
+                                        </td>                                   
+                                    </tr>
+                                    <%}%>                                                       
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>             
+            </div>
+
             <div class="row">
                 <div class="col l12 s12">
                     <jsp:include page="/Views/Shared/paginacion.jsp">

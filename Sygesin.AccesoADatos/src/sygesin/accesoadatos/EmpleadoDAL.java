@@ -282,7 +282,7 @@ public class EmpleadoDAL {
             sql += ",";
             sql += RolDAL.obtenerCampos();
             sql += " FROM Empleado e";
-            sql += " JOIN Rol c on (e.IdRol=c.Id)";
+            sql += " JOIN  Rol r on (e.IdRol=r.Id)";
             ComunDB comundb = new ComunDB();
             ComunDB.utilQuery utilQuery = comundb.new utilQuery(sql, null, 0);
             querySelect(pEmpleado, utilQuery);

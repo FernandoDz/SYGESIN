@@ -18,8 +18,8 @@
                 <div class="row">
                     <div class="row">
                     <div class="input-field col l6 s12">
-                        <input  id="txtIdRol" type="text" name="idrol">
-                        <label for="txtIdRol">Rol</label>
+                        <input  id="txtIdrol" type="text" name="idrol">
+                        <label for="txtIdrol">Rol</label>
                     </div>
                     <div class="input-field col l6 s12">
                         <input  id="txtNombre" type="text" name="nombre">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Rol/select.jsp">                           
-                            <jsp:param name="id" value="<%=estudiante.getIdRol() %>" />  
+                            <jsp:param name="id" value="<%=estudiante.getIdrol() %>" />  
                         </jsp:include>  
                         <span id="slRol_error" style="color:red" class="helper-text"></span>
                     </div>

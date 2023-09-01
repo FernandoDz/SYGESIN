@@ -15,9 +15,9 @@
             <h5>Eliminar Estudiante</h5>
             <form action="Estudiante" method="post">  
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
-                <input type="hidden" name="id" value="<%=empresa.getId()%>">  
+                <input type="hidden" name="id" value="<%=estudiante.getId()%>">  
                 <div class="row">
-                   <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtIdRold" type="text" value="<%=estudiante.getIdrol()%>" disabled>
                         <label for="txtIdRold">Rol</label>
                     </div> 
@@ -41,19 +41,19 @@
                         <input  id="txtTelefono" type="text" value="<%=estudiante.getTelefono()%>" disabled>
                         <label for="txtTelefono">Telefono</label>
                     </div> 
-                     <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtCorreo" type="text" value="<%=estudiante.getCorreo()%>" disabled>
                         <label for="txtCorreo">Correo</label>
                     </div>
-                     <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtEncargado" type="text" value="<%=estudiante.getEncargado()%>" disabled>
                         <label for="txtEncargado">Encargado</label>
                     </div>
-                     <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtSeccion" type="text" value="<%=estudiante.getSeccion()%>" disabled>
                         <label for="txtSeccion">Seccion</label>
                     </div>
-                     <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtFechanacimiento" type="text" value="<%=estudiante.getFechanacimiento()%>" disabled>
                         <label for="txtFechanacimiento">Fechanacimiento</label>
                     </div>
